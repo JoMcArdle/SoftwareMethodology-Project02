@@ -40,6 +40,7 @@ public class Roster {
 
         }
     }//maintain the order after remove
+
     public boolean contains(Student student){} //if the student is in roster
     public void print () {} //print roster sorted by profiles
     public void printBySchoolMajor() {} //print roster sorted by school major
