@@ -1,4 +1,8 @@
 package domain;
+/**
+ Profile represents an student profile in our program
+ @author Yovanny Moscoso
+ */
 public class Profile implements Comparable<Profile> {
     private String lname;
     private String fname;
@@ -11,6 +15,18 @@ public class Profile implements Comparable<Profile> {
         this.lname = lname;
         this.fname = fname;
         this.dob = dob;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public Date getDob() {
+        return dob;
     }
 
     @Override
@@ -28,17 +44,17 @@ public class Profile implements Comparable<Profile> {
     public int compareTo(Profile profile) {
         if(this.lname.compareTo(profile.lname) > 0){
             return 1;
-        }if(this.lname.compareTo(profile.lname) < 0){
+        }else if(this.lname.compareTo(profile.lname) < 0){
             return -1;
-        }if(this.fname.compareTo(profile.fname) > 0){
+        }else if(this.fname.compareTo(profile.fname) > 0){
             return 1;
-        }if(this.fname.compareTo(profile.fname) < 0){
+        }else if(this.fname.compareTo(profile.fname) < 0){
             return -1;
-        }/*if(this.dob.compareTo(profile.dob) > 1){
+        }else if(this.dob.compareTo(profile.dob) > 0){
             return 1;
-        }if(this.dob.compareTo(profile.dob) < 1){
+        }else if(this.dob.compareTo(profile.dob) < 0){
             return -1;
-        }*/else {
+        }else {
             return 0;
         }
     }
@@ -46,6 +62,6 @@ public class Profile implements Comparable<Profile> {
     @Override
     public String toString(){
 
-        return this.fname + ", " + this.lname +", " + this.dob.toString();
+        return this.lname + ", " + this.fname +", " + this.dob.toString();
     }
 }
