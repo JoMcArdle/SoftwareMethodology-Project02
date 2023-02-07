@@ -73,6 +73,7 @@ public class Roster {
             myRoster.add(s1);
             myRoster.add(s2);
             myRoster.add(s3);
+            System.out.println(myRoster.contains(s3));
             myRoster.add(s4);
            myRoster.print();
 
