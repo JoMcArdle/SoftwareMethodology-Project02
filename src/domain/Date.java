@@ -12,10 +12,14 @@ public class Date implements Comparable<Date> {
     } //create an object with today’s date (see Calendar class)
 
     public Date(String date) {
-        Date dateObject = new Date(date);
+        String[] myDate = date.split("/");
+        int month = Integer.parseInt(myDate[0]);
+        int day = Integer.parseInt(myDate[1]);
+        int year = Integer.parseInt(myDate[2]);
     } //take “mm/dd/yyyy” and create a Date object
 
     public boolean isValid() {
+        return true;
     } //check if a date is a valid calendar date
 
     @Override

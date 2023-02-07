@@ -1,5 +1,4 @@
 package domain;
-import java.util.Date;
 public class Profile implements Comparable<Profile> {
     private String lname;
     private String fname;
@@ -15,11 +14,6 @@ public class Profile implements Comparable<Profile> {
     }
 
     @Override
-    public String toString(){
-        return this.fname + "," + this.fname +", " + this.dob;
-    }
-
-    @Override
     public boolean equals(Object obj){
         if(obj instanceof Profile){
             Profile p = (Profile) obj;
@@ -31,7 +25,27 @@ public class Profile implements Comparable<Profile> {
     }
 
     @Override
-    public int compareTo(Profile o) {
-        return 0;
+    public int compareTo(Profile profile) {
+        if(this.lname.compareTo(profile.lname) > 0){
+            return 1;
+        }if(this.lname.compareTo(profile.lname) < 0){
+            return -1;
+        }if(this.fname.compareTo(profile.fname) > 0){
+            return 1;
+        }if(this.fname.compareTo(profile.fname) < 0){
+            return -1;
+        }/*if(this.dob.compareTo(profile.dob) > 1){
+            return 1;
+        }if(this.dob.compareTo(profile.dob) < 1){
+            return -1;
+        }*/else {
+            return 0;
+        }
+    }
+
+    @Override
+    public String toString(){
+
+        return this.fname + ", " + this.lname +", " + this.dob.toString();
     }
 }
