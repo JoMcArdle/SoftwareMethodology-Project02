@@ -1,5 +1,8 @@
 package domain;
-import java.util.Date;
+/**
+ Profile represents an student profile in our program
+ @author Yovanny Moscoso
+ */
 public class Profile implements Comparable<Profile> {
     private String lname;
     private String fname;
@@ -14,9 +17,16 @@ public class Profile implements Comparable<Profile> {
         this.dob = dob;
     }
 
-    @Override
-    public String toString(){
-        return this.fname + "," + this.fname +", " + this.dob;
+    public String getLname() {
+        return lname;
+    }
+
+    public String getFname() {
+        return fname;
+    }
+
+    public Date getDob() {
+        return dob;
     }
 
     @Override
@@ -31,7 +41,27 @@ public class Profile implements Comparable<Profile> {
     }
 
     @Override
-    public int compareTo(Profile o) {
-        return 0;
+    public int compareTo(Profile profile) {
+        if(this.lname.compareTo(profile.lname) > 0){
+            return 1;
+        }else if(this.lname.compareTo(profile.lname) < 0){
+            return -1;
+        }else if(this.fname.compareTo(profile.fname) > 0){
+            return 1;
+        }else if(this.fname.compareTo(profile.fname) < 0){
+            return -1;
+        }else if(this.dob.compareTo(profile.dob) > 0){
+            return 1;
+        }else if(this.dob.compareTo(profile.dob) < 0){
+            return -1;
+        }else {
+            return 0;
+        }
+    }
+
+    @Override
+    public String toString(){
+
+        return this.lname + ", " + this.fname +", " + this.dob.toString();
     }
 }
