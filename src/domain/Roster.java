@@ -4,9 +4,10 @@ import java.util.Comparator;
 
 public class Roster {
     private Student[] roster;
-    private int size = 5;
+    private int size = 4;
     private int numStudents = 0;
     private int location = 0;
+    private static final int INCREASE_CAPACITY = 4;
     public Roster(){
         roster = new Student[size];
     }
@@ -23,17 +24,21 @@ public class Roster {
         return result;
     } //search the given student in roster
     private void grow() {
-        Student[] newArray = new Student[size + 4];
-        for(int i=0; i< roster.length; i++){
+        Student[] newArray = new Student[size + INCREASE_CAPACITY];
+        for(int i=0; i< numStudents; i++){
             newArray[i]= roster[i];
         }
         roster = newArray;
     } //increase the array capacity by 4
 
-    public boolean add(Student students){
+    public boolean add(Student student){
         if(numStudents == roster.length)
             grow();
-        roster[numStudents] = students;
+        find(student);
+        for(int i = numStudents; i>location; i--){
+            roster[i] = roster[i-1];
+        }
+        roster[location] = student;
         numStudents++;
         return true;
     } //add student to end of array
