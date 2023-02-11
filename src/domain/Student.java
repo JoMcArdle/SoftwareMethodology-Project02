@@ -21,21 +21,16 @@ public class Student implements Comparable<Student>{
         this.creditCompleted = creditCompleted;
     }
     public Profile getProfile() {
-        return profile;
+        return this.profile;
     }
 
-    public void setProfile(Profile profile) {
-        this.profile = profile;
-    }
     public Major getMajor() {
-        return major;
+        return this.major;
     }
 
-    public void setMajor(Major major) {
-        this.major = major;
-    }
+
     public int getCreditCompleted() {
-        return creditCompleted;
+        return this.creditCompleted;
     }
 
     public void setCreditCompleted(int creditCompleted) {
@@ -55,23 +50,12 @@ public class Student implements Comparable<Student>{
     }
     @Override
     public String toString() {
-        return this.profile + ", " + this.major + ", " + this.creditCompleted;
+        return this.profile + ", " + this.major.name() + ", " + this.creditCompleted;
     }
 
     @Override
     public int compareTo(Student student) {
         return this.profile.compareTo(student.profile);
-    }
-    public int compareByMajor(Student s){
-        /*
-        if(this.getMajor().getDepartmentName().compareTo(s.getMajor().getDepartmentName()) > 0){
-            return 1;
-        }else if(this.getMajor().getDepartmentName().compareTo(s.getMajor().getDepartmentName()) < 0){
-            return -1;
-        }else{
-            return 0;
-        }*/
-        return this.getMajor().getDepartmentName().compareTo(s.getMajor().getDepartmentName());
     }
     public int compareByNumberOfCredits(Student s){
         return this.creditCompleted - s.creditCompleted;
@@ -85,12 +69,10 @@ public class Student implements Comparable<Student>{
             Student student2= new Student(p2, Major.CS, 60);
             Student student3= new Student(p3, Major.CS, 60);
             System.out.println(student1.compareTo(student2));
-            String s= "Hello";
-            String t = "Hullo";
+            System.out.println(student3.getMajor());
             //System.out.println(s.compareTo(t));
             // System.out.println(student);
-        System.out.println(student1.compareByMajor(student2));
-        System.out.println(student1.getMajor().getDepartmentName());
+
 
     }
 }

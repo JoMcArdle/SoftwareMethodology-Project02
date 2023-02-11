@@ -1,6 +1,6 @@
 package domain;
 /**
- Profile represents an student profile in our program
+ Profile represents a student profile in our program
  @author Yovanny Moscoso
  */
 public class Profile implements Comparable<Profile> {
