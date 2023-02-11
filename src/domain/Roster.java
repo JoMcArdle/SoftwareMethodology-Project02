@@ -94,7 +94,6 @@ public class Roster {
     }
     public void printByStanding(){} //print roster sorted by standing
 
-
         public static void main(String[] args) {
 
             Roster myRoster = new Roster();
