@@ -103,7 +103,6 @@ public class Roster {
         iterate(roster);
     } //print roster sorted by standing
 
-
         public static void main(String[] args) {
 
             Roster myRoster = new Roster();

@@ -55,10 +55,24 @@ public class Date implements Comparable<Date> {
 
     } //take “mm/dd/yyyy” and create a Date object
 
+    public int getDay() {
+
+        return day;
+    }
+
+    public int getMonth() {
+
+        return month;
+    }
+
+    public int getYear() {
+
+        return year;
+    }
+
     private boolean checkMonth() {
 
-        if(this.month < 1 || this.month > 12) {
-
+        if(this.month < JANUARY || this.month > DECEMBER) {
             return false;
         }
         //check the months of January, March, May, July, August, October, and December
@@ -94,16 +108,27 @@ public class Date implements Comparable<Date> {
 
     private boolean checkYear() {
 
-        Calendar today = Calendar.getInstance();
+        Date currentDate = new Date();
 
         if(this.year < MAX_YEAR) {
 
             return false;
         }
-        else if(this.year == today.get(Calendar.YEAR) || this.year > today.get(Calendar.YEAR) ||
-                this.year >= today.get(Calendar.YEAR) - MIN_AGE) {
+        else if(this.year == currentDate.year) {
 
             return false;
+        }
+        else if(this.year >= currentDate.year - MIN_AGE) {
+
+            if(this.month > currentDate.month) {
+
+                return false;
+            }
+
+            if(this.day >= currentDate.day) {
+
+                return false;
+            }
         }
         return true;
 
@@ -143,7 +168,42 @@ public class Date implements Comparable<Date> {
     @Override
     public int compareTo(Date o) {
 
-        if(this.month > o.month) {
+        if(this.year > o.year) {
+
+            return -1;
+        }
+        else if(this.year < o.year) {
+
+            return 1;
+        }
+        else if(this.year == o.year) {
+
+            if (this.month > o.month) {
+
+                return -1;
+
+            } else if (this.month < o.month) {
+
+                return 1;
+
+            } else if (this.month == o.month) {
+
+                if (this.day > o.day) {
+
+                    return -1;
+
+                } else if (this.day < o.day) {
+
+                    return 1;
+
+                } else {
+
+                    return 0;
+                }
+            }
+        }
+
+        /*if(this.month > o.month) {
 
             return 1;
         }
@@ -176,7 +236,7 @@ public class Date implements Comparable<Date> {
                     return 0;
                 }
             }
-        }
+        }*/
         return 0;
     }
 
@@ -222,7 +282,7 @@ public class Date implements Comparable<Date> {
 
         Date d10 = new Date("-1/31/2003");
 
-        if(d3.isValid() == true) {
+        if(d1.isValid() == true) {
 
             System.out.println("This is a valid date.");
         }
