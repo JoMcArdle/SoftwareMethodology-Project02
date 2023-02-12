@@ -114,20 +114,23 @@ public class Date implements Comparable<Date> {
 
             return false;
         }
-        else if(this.year == currentDate.year) {
+        else if(this.year == currentDate.year || this.year > currentDate.year - MIN_AGE) {
 
             return false;
         }
-        else if(this.year >= currentDate.year - MIN_AGE) {
+        else if(this.year == currentDate.year - MIN_AGE) {
 
             if(this.month > currentDate.month) {
 
                 return false;
             }
 
-            if(this.day >= currentDate.day) {
+            else if(this.month == currentDate.month) {
 
-                return false;
+                if(this.day > currentDate.day) {
+
+                    return false;
+                }
             }
         }
         return true;
@@ -203,40 +206,6 @@ public class Date implements Comparable<Date> {
             }
         }
 
-        /*if(this.month > o.month) {
-
-            return 1;
-        }
-        else if (this.month < o.month) {
-
-            return -1;
-        }
-        else if (this.month == o.month) {
-
-            if(this.day > o.day) {
-
-                return 1;
-            }
-            else if (this.day < o.day) {
-
-                return -1;
-            }
-            else if (this.day == o.day) {
-
-                if (this.year > o.year) {
-
-                    return 1;
-                }
-                else if (this.year < o.year) {
-
-                    return -1;
-                }
-                else {
-
-                    return 0;
-                }
-            }
-        }*/
         return 0;
     }
 
@@ -260,29 +229,31 @@ public class Date implements Comparable<Date> {
 
     public static void main(String[] args) {
 
-        //d1-d3 are my test cases
+        //d1-d4 are my test cases
         Date d1 = new Date("1/13/600");
 
         Date d2 = new Date("-50/20/1960");
 
         Date d3 = new Date("2/29/2024");
 
+        Date d4 = new Date("1/20/2011");
+
         //d4-d10 are the provided test cases in Project1TestCases.txt
-        Date d4 = new Date("2/29/2019");
+        Date d5 = new Date("2/29/2019");
 
-        Date d5 = new Date("9/2/2022");
+        Date d6 = new Date("9/2/2022");
 
-        Date d6 = new Date("2/29/2003");
+        Date d7 = new Date("2/29/2003");
 
-        Date d7 = new Date("4/31/2003");
+        Date d8 = new Date("4/31/2003");
 
-        Date d8 = new Date("13/31/2003");
+        Date d9 = new Date("13/31/2003");
 
-        Date d9 = new Date("3/32/2003");
+        Date d10 = new Date("3/32/2003");
 
-        Date d10 = new Date("-1/31/2003");
+        Date d11 = new Date("-1/31/2003");
 
-        if(d1.isValid() == true) {
+        if(d4.isValid() == true) {
 
             System.out.println("This is a valid date.");
         }
