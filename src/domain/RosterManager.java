@@ -13,8 +13,10 @@ public class RosterManager {
     private String dob;
     private String major;
     private String credits;
+    private int numStudents;
     private Roster roster;
     private Student student;
+    private Major stMajor;
     private static final int MIN_AGE = 16;
 
 
@@ -68,6 +70,7 @@ public class RosterManager {
 
         Date today = new Date();
         Date date = new Date(this.dob);
+        Profile stProfile = new Profile(this.lname, this.fname, date);
 
         if(date.isValid() == false) {
 
@@ -81,32 +84,42 @@ public class RosterManager {
             }
         }
 
-        Profile stProfile = new Profile(this.lname, this.fname, date);
+        //Profile stProfile = new Profile(this.lname, this.fname, date);
 
-        Major stMajor = Major.valueOf(this.major);
+        if(!(major.equalsIgnoreCase("CS") || major.equalsIgnoreCase("MATH")
+                || major.equalsIgnoreCase("EE") || major.equalsIgnoreCase("ITI")
+                || major.equalsIgnoreCase("BAIT"))) {
+
+            System.out.println("Major code invalid: " + major);
+            return;
+        }
+        else {
+
+            stMajor = Major.valueOf(this.major);
+        }
 
         try {
             Integer.parseInt(this.credits);
         }
         catch (NumberFormatException e) {
             System.out.println("Credits completed invalid: not an integer!");
+            return;
         }
 
         if(Integer.parseInt(this.credits) < 0) {
 
-            System.out.println("Credits completed invalid: cannot be negative");
+            System.out.println("Credits completed invalid: cannot be negative!");
             return;
         }
 
-        this.student = new Student(stProfile, stMajor, Integer.parseInt(this.credits));
+        Student student = new Student(stProfile, stMajor, Integer.parseInt(this.credits));
 
-        this.roster = new Roster();
-
-        if(roster.contains(student) == true) {
+        if(roster.contains(student)) {
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " already in the roster.");
         }
         else {
             roster.add(student);
+            numStudents++;
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " added to the roster.");
         }
 
@@ -115,6 +128,7 @@ public class RosterManager {
     private void removeCommand() {
 
         if(roster.remove(student) == true) {
+            numStudents--;
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " removed from the roster.");
         }
         else {
@@ -124,38 +138,41 @@ public class RosterManager {
 
     private void printCommand() {
 
-        if(roster == null) {
+        if(numStudents == 0) {
 
             System.out.println("Student roster is empty!");
         }
         else {
-
+            System.out.println("* Student roster sorted by last name, first name, DOB **");
             roster.print();
+            System.out.println("* end of roster **");
         }
 
     }
 
     private void printByStandingCommand() {
 
-        if(roster == null) {
+        if(numStudents == 0) {
 
             System.out.println("Student roster is empty!");
         }
         else {
-
+            System.out.println("* Student roster sorted by standing **");
             roster.printByStanding();
+            System.out.println("* end of roster **");
         }
     }
 
     private void printBySchoolMajorCommand() {
 
-        if(roster == null) {
+        if(numStudents == 0) {
 
             System.out.println("Student roster is empty!");
         }
         else {
-
+            System.out.println("* Student roster sorted by school, major **");
             roster.printBySchoolMajor();
+            System.out.println("* end of roster **");
         }
     }
 
@@ -168,7 +185,7 @@ public class RosterManager {
 
         Major newMajor = Major.valueOf(this.major);
 
-        if(roster == null) {
+        if(numStudents == 0) {
 
             System.out.println("Student roster is empty!");
         }
@@ -186,7 +203,7 @@ public class RosterManager {
 
     private void convertToTokens(String elements) {
 
-        String [] arrOfTokens = elements.split(" ");
+        String [] arrOfTokens = elements.split("\\s+");
 
         this.opCode = arrOfTokens[0];
 
@@ -210,6 +227,8 @@ public class RosterManager {
     public void run() {
 
         Scanner sc = new Scanner(System.in);
+        this.roster = new Roster();
+        int numStudents = 0;
         System.out.println("Roster Manager running...");
 
         while(sc.hasNextLine()) {
@@ -221,11 +240,8 @@ public class RosterManager {
             operations();
 
             if(command.equals("Q")) {
-
                 return;
             }
-
         }
-
     }
 }
