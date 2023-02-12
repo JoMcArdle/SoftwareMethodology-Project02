@@ -41,7 +41,7 @@ public class Roster {
         return true;
     } //add student to end of array
     public boolean remove(Student student){
-        if(find(student) == 1){
+        if(find(student) >= 0){
             for (int i = location; i<= numStudents -2; i++){
                 roster[i] = roster[i+1];
             }
@@ -51,7 +51,7 @@ public class Roster {
         return false;
     }//maintain the order after remove
     public boolean contains(Student student){
-        if(find(student) == 1){
+        if(find(student) >= 0){
             return true;
         }
         return false;

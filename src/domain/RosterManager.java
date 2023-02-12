@@ -117,7 +117,7 @@ public class RosterManager {
         if(roster.contains(student)) {
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " already in the roster.");
         }
-        else {
+        else{
             roster.add(student);
             numStudents++;
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " added to the roster.");

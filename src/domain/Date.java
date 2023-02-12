@@ -173,31 +173,31 @@ public class Date implements Comparable<Date> {
 
         if(this.year > o.year) {
 
-            return -1;
+            return 1;
         }
         else if(this.year < o.year) {
 
-            return 1;
+            return -1;
         }
         else if(this.year == o.year) {
 
             if (this.month > o.month) {
 
-                return -1;
+                return 1;
 
             } else if (this.month < o.month) {
 
-                return 1;
+                return -1;
 
             } else if (this.month == o.month) {
 
                 if (this.day > o.day) {
 
-                    return -1;
+                    return 1;
 
                 } else if (this.day < o.day) {
 
-                    return 1;
+                    return -1;
 
                 } else {
 

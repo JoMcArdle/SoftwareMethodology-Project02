@@ -5,18 +5,18 @@ package domain;
     @author Yovanny Moscoso
  */
 public enum Major{
-    CS( "SAS", "01:198"),
-    MATH("SAS","01:640"),
-    EE("SOE", "14:332"),
-    ITI("SC&I", "04:547"),
-    BAIT("RBS","33:146");
+    CS("01:198",  "SAS"),
+    MATH("01:640", "SAS"),
+    EE( "14:332", "SOE"),
+    ITI( "04:547", "SC&I"),
+    BAIT("33:146", "RBS");
 
     private final String school;
     private final String departmentNumber;
 
-    Major(String school, String departmentNumber){
-        this.school = school;
+    Major(String departmentNumber, String school){
         this.departmentNumber = departmentNumber;
+        this.school = school;
     }
 
     public String getSchool() {
@@ -29,12 +29,11 @@ public enum Major{
     }
 
     public String toString(){
-        return this.school + "(" + this.name() +  this.departmentNumber + ")";
+        return this.school + "(" + this.departmentNumber+  this.name()+ ")";
     }
     public static void main(String[] args) {
     Major m = Major.CS;
         System.out.println(m.name());
         String s = m.name();
-        System.out.println(s+"itwas");
     }
 }
