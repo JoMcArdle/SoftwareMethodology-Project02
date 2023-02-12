@@ -1,10 +1,8 @@
 package domain;
 
-import java.util.Comparator;
-
 public class Roster {
     private Student[] roster;
-    private int size = 4;
+    private int size = 100;
     private int numStudents = 0;
     private int location = 0;
     private static final int INCREASE_CAPACITY = 4;
@@ -78,59 +76,63 @@ public class Roster {
         }
         iterate(roster);
     } //print roster sorted by profiles
-    public void printBySchoolMajor(){
-        boolean needToSwap = false;
-        for (int i = 0; i < numStudents-1; i++) {
-            if (roster[i].getMajor().name().compareTo(roster[i + 1].getMajor().name()) > 0){
-                needToSwap = true;
-                Student temp = roster[i];
-                roster[i] = roster[i + 1];
-                roster[i + 1] = temp;
+    public void printBySchoolMajor() {
+        boolean needToSwap = true;
+        while (needToSwap) {
+            needToSwap = false;
+            for (int i = 0; i < numStudents - 1; i++) {
+                if (roster[i].compareByMajor(roster[i + 1]) > 0) {
+                    needToSwap = true;
+                    Student temp = roster[i];
+                    roster[i] = roster[i + 1];
+                    roster[i + 1] = temp;
+                }
             }
         }
         iterate(roster);
     }
-    public void printByStanding(){
-        boolean needToSwap = false;
-        for (int i = 0; i < numStudents-1; i++) {
-            if (roster[i].compareByNumberOfCredits(roster[i + 1]) > 0){
-                needToSwap = true;
-                Student temp = roster[i];
-                roster[i] = roster[i + 1];
-                roster[i + 1] = temp;
+    public void printByStanding() {
+        boolean needToSwap = true;
+        while (needToSwap) {
+            needToSwap = false;
+            for (int i = 0; i < numStudents - 1; i++) {
+                if (roster[i].compareByStanding(roster[i + 1]) > 0) {
+                    needToSwap = true;
+                    Student temp = roster[i];
+                    roster[i] = roster[i + 1];
+                    roster[i + 1] = temp;
+                }
             }
         }
         iterate(roster);
-    } //print roster sorted by standing
+    }//print roster sorted by standing
+            public static void main (String[]args){
 
-        public static void main(String[] args) {
+                Roster myRoster = new Roster();
+                Profile p1 = new Profile("Smith", "Mario", new Date("12/14/1993"));
+                Profile p2 = new Profile("Taylor", "Maria", new Date("12/15/1993"));
+                Profile p3 = new Profile("Johnson", "Michael", new Date("11/18/1985"));
+                Profile p4 = new Profile("Edison", "Thomas", new Date("02/25/1190"));
+                Profile p5 = new Profile("Fernandez", "Ana", new Date("05/13/2004"));
+                Profile p6 = new Profile("Gonzales", "Ana", new Date("05/13/2004"));
+                Student s1 = new Student(p1, Major.EE, 100);
+                Student s2 = new Student(p2, Major.EE, 45);
+                Student s3 = new Student(p3, Major.ITI, 75);
+                Student s4 = new Student(p4, Major.ITI, 75);
+                Student s5 = new Student(p5, Major.BAIT, 80);
+                Student s6 = new Student(p6, Major.CS, 90);
+                myRoster.add(s1);
+                myRoster.add(s2);
+                myRoster.add(s3);
+                myRoster.add(s4);
+                myRoster.add(s5);
+                myRoster.add(s6);
+                System.out.println("\n********* Sorted by Profile ************\n");
+                myRoster.print();
+                System.out.println("\n********* Sorted by Major ************\n");
+                myRoster.printBySchoolMajor();
+                System.out.println("\n********* Sorted by Standing ************\n");
+                myRoster.printByStanding();
 
-            Roster myRoster = new Roster();
-            Profile p1 = new Profile("Laura", "Smith", new Date("12/14/1993"));
-            Profile p2 = new Profile("Lucas", "Taylor", new Date("12/15/1993"));
-            Profile p3 = new Profile("Marie", "Johnson", new Date("11/18/1985"));
-            Profile p4 = new Profile("Thomas", "Edison", new Date("02/25/1190"));
-            Profile p5 = new Profile("Ana", "Fernandez", new Date("05/13/2004"));
-            Profile p6 = new Profile("Ana", "Gonzales", new Date("05/13/2004"));
-            Student s1 = new Student(p1, Major.EE, 15);
-            Student s2 = new Student(p2, Major.EE, 60);
-            Student s3 = new Student(p3, Major.ITI, 75);
-            Student s4 = new Student(p4, Major.ITI, 75);
-            Student s5 = new Student(p5, Major.BAIT, 80);
-            Student s6 = new Student(p6, Major.CS, 90);
-            myRoster.add(s1);
-            myRoster.add(s2);
-            myRoster.add(s3);
-            myRoster.add(s4);
-            myRoster.add(s5);
-            myRoster.add(s6);
-           // myRoster.print();
-            //int i = myRoster.find(s3);
-            //System.out.println(i);
-            //myRoster.printBySchoolMajor();
-            myRoster.printByStanding();
-
-    }
-
-
-}
+            }
+        }
