@@ -33,7 +33,8 @@ public class Profile implements Comparable<Profile> {
     public boolean equals(Object obj){
         if(obj instanceof Profile){
             Profile p = (Profile) obj;
-            if(this.lname.equals(p.lname) && this.fname.equals(p.fname) && this.dob.equals(p.dob)) {
+            if(this.lname.equalsIgnoreCase(p.lname) && this.fname.equalsIgnoreCase(p.fname)
+                    && this.dob.equals(p.dob)) {
                 return true;
             }
         }
