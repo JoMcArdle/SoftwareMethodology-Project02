@@ -92,12 +92,12 @@ public class Date implements Comparable<Date> {
 
         //check the month of February
         if(this.month == FEBRUARY) {
-            if (leapYear() == true) {
+            if (checkLeapYear() == true) {
                 if(this.day < FIRST_DAY_OF_MONTH || this.day > LAST_DAY_OF_LEAP_YEAR_FEB) {
                     return false;
                 }
             }
-            else if(leapYear() == false) {
+            else if(checkLeapYear() == false) {
                 if(this.day < FIRST_DAY_OF_MONTH || this.day > LAST_DAY_OF_NON_LEAP_YEAR_FEB) {
                     return false;
                 }
@@ -137,7 +137,7 @@ public class Date implements Comparable<Date> {
 
     } //helper method for isValid()
 
-    private boolean leapYear() {
+    private boolean checkLeapYear() {
 
         if(this.year % QUATERCENTENNIAL == 0) {
 
@@ -213,9 +213,9 @@ public class Date implements Comparable<Date> {
     public boolean equals(Object obj) {
         if (obj instanceof Date) {
             Date date = (Date) obj;
-            return Integer.compare(month, date.month) == 0
-                    && Integer.compare(day, date.day) == 0
-                    && Integer.compare(year, date.year) == 0;
+            return Integer.compare(this.month, date.month) == 0
+                    && Integer.compare(this.day, date.day) == 0
+                    && Integer.compare(this.year, date.year) == 0;
         }
         return false;
     }
