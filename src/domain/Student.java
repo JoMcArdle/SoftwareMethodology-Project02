@@ -14,6 +14,7 @@ public class Student implements Comparable<Student>{
     private Standing standing;
 
     public Student() {
+
     } // Empty constructor
 
     public Student(Profile profile, Major major, int creditCompleted) {

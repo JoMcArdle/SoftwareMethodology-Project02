@@ -17,6 +17,7 @@ public class RosterManager {
     private Roster roster;
     private Student student;
     private Major stMajor;
+    private Date date;
     private static final int MIN_AGE = 16;
 
 
@@ -25,7 +26,7 @@ public class RosterManager {
 
     }
 
-    private void operations() {
+    private boolean operations() {
 
         switch(opCode) {
             case "A":
@@ -58,122 +59,114 @@ public class RosterManager {
 
             case "Q":
                 System.out.println("Roster Manager terminated.");
-                return;
+                return true;
 
             default:
                 System.out.println(opCode + " is an invalid command!");
                 break;
         }
+        return true;
     }
 
-    private void addCommand() {
+    private boolean addCommand() {
 
-        Date today = new Date();
-        Date date = new Date(this.dob);
-        Profile stProfile = new Profile(this.lname, this.fname, date);
+        this.date = new Date(this.dob);
 
-        if(date.isValid() == false) {
+        if(dateError() == false) {
 
-            if(date.equals(today) || date.compareTo(today) > 0 && date.getYear() >= today.getYear() - MIN_AGE) {
-                System.out.println("DOB invalid: " + this.dob + " younger than 16 years old.");
-                return;
-            }
-            else {
-                    System.out.println("DOB invalid: " + this.dob + " not a valid calendar date!");
-                    return;
-            }
+            return false;
         }
 
-        //Profile stProfile = new Profile(this.lname, this.fname, date);
+        Profile stProfile = new Profile(this.lname, this.fname, date);
 
-        if(!(major.equalsIgnoreCase("CS") || major.equalsIgnoreCase("MATH")
-                || major.equalsIgnoreCase("EE") || major.equalsIgnoreCase("ITI")
-                || major.equalsIgnoreCase("BAIT"))) {
+        if(majorError() == false) {
 
-            System.out.println("Major code invalid: " + major);
-            return;
+            return false;
         }
         else {
 
-            stMajor = Major.valueOf(this.major);
+            stMajor = Major.valueOf(this.major.toUpperCase());
         }
 
-        try {
-            Integer.parseInt(this.credits);
-        }
-        catch (NumberFormatException e) {
-            System.out.println("Credits completed invalid: not an integer!");
-            return;
+        if(creditsError() == false) {
+
+            return false;
         }
 
-        if(Integer.parseInt(this.credits) < 0) {
-
-            System.out.println("Credits completed invalid: cannot be negative!");
-            return;
-        }
-
-        Student student = new Student(stProfile, stMajor, Integer.parseInt(this.credits));
+        this.student = new Student(stProfile, stMajor, Integer.parseInt(this.credits));
 
         if(roster.contains(student)) {
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " already in the roster.");
+            return false;
         }
         else{
             roster.add(student);
             //numStudents++;
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " added to the roster.");
         }
-
+        return true;
     }
 
-    private void removeCommand() {
+    private boolean removeCommand() {
 
-        if(roster.remove(student) == true) {
+        this.date = new Date(this.dob);
+        Profile stProfile = new Profile(this.lname, this.fname, date);
+        this.student = new Student(stProfile, null, Integer.parseInt(this.credits));
+
+        if(roster.remove(student)) {
             numStudents--;
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " removed from the roster.");
         }
         else {
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " not in the roster.");
+            return false;
         }
+        return true;
     }
 
-    private void printCommand() {
+    private boolean printCommand() {
 
         if(numStudents == 0) {
 
             System.out.println("Student roster is empty!");
+            return false;
         }
         else {
             System.out.println("* Student roster sorted by last name, first name, DOB **");
             roster.print();
             System.out.println("* end of roster **");
         }
-
+        return true;
     }
 
-    private void printByStandingCommand() {
+    private boolean printByStandingCommand() {
 
         if(numStudents == 0) {
 
             System.out.println("Student roster is empty!");
+            return false;
         }
         else {
             System.out.println("* Student roster sorted by standing **");
             roster.printByStanding();
             System.out.println("* end of roster **");
         }
+        return true;
     }
 
-    private void printBySchoolMajorCommand() {
+    private boolean printBySchoolMajorCommand() {
 
         if(numStudents == 0) {
 
             System.out.println("Student roster is empty!");
+            return false;
         }
         else {
             System.out.println("* Student roster sorted by school, major **");
             roster.printBySchoolMajor();
             System.out.println("* end of roster **");
         }
+        return true;
     }
 
     private void listCommand() {
@@ -181,24 +174,83 @@ public class RosterManager {
         System.out.println("Prints list of students in specified major, sorted by last name, first name and DOB.");
     }
 
-    private void changeMajorCommand() {
+    private boolean changeMajorCommand() {
 
-        Major newMajor = Major.valueOf(this.major);
+        this.date = new Date(this.dob);
+        Profile stProfile = new Profile(this.lname, this.fname, date);
+        this.student = new Student(stProfile, null, Integer.parseInt(this.credits));
 
         if(numStudents == 0) {
 
             System.out.println("Student roster is empty!");
+            return false;
         }
-
         if(roster.contains(student) == false) {
 
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " is not in the roster.");
+            return false;
+        }
+        if(majorError() == false) {
+
+            return false;
         }
         else {
-
+            roster.remove(student);
+            Major newMajor = Major.valueOf(this.major);
             student.setMajor(newMajor);
-            System.out.println(this.fname + " " + this.lname + " " + this.dob + " major changed to " + newMajor + ".");
+            roster.add(student);
+            System.out.println(this.fname + " " + this.lname + " " + this.dob + " major changed to "
+                    + this.major + ".");
         }
+        return true;
+    }
+
+    private boolean dateError() {
+
+        Date today = new Date();
+
+        if(date.isValid() == false) {
+
+            if(date.equals(today) || date.compareTo(today) < 0 && date.getYear() >= today.getYear() - MIN_AGE) {
+                System.out.println("DOB invalid: " + this.dob + " younger than 16 years old.");
+                return false;
+            }
+            else {
+                System.out.println("DOB invalid: " + this.dob + " not a valid calendar date!");
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private boolean majorError() {
+
+        if(!(major.equalsIgnoreCase("CS") || major.equalsIgnoreCase("MATH")
+                || major.equalsIgnoreCase("EE") || major.equalsIgnoreCase("ITI")
+                || major.equalsIgnoreCase("BAIT"))) {
+
+            System.out.println("Major code invalid: " + major);
+            return false;
+        }
+        return true;
+    }
+
+    private boolean creditsError() {
+
+        try {
+            Integer.parseInt(this.credits);
+        }
+        catch (NumberFormatException e) {
+            System.out.println("Credits completed invalid: not an integer!");
+            return false;
+        }
+
+        if(Integer.parseInt(this.credits) < 0) {
+
+            System.out.println("Credits completed invalid: cannot be negative!");
+            return false;
+        }
+        return true;
     }
 
     private void convertToTokens(String elements) {
@@ -228,8 +280,8 @@ public class RosterManager {
     public void run() {
 
         Scanner sc = new Scanner(System.in);
+        sc.useDelimiter("[\\r\\n]+");
         this.roster = new Roster();
-        int numStudents = 0;
         System.out.println("Roster Manager running...");
 
         while(sc.hasNextLine()) {
@@ -241,8 +293,10 @@ public class RosterManager {
             operations();
 
             if(command.equals("Q")) {
-                return;
+
+                break;
             }
         }
+        sc.close();
     }
 }
