@@ -1,5 +1,9 @@
 package domain;
 
+/**
+ Student class will represent a student entity in our program
+ @author Yovanny Moscoso
+ */
 public class Roster {
     private Student[] roster;
     private int size = 100;
@@ -57,7 +61,7 @@ public class Roster {
         return false;
     } //if the student is in roster
     private void iterate(Student[] students){
-        for(int i = 0; i<numStudents; i++){
+        for(int i = 0; i < numStudents; i++){
             System.out.println(students[i]);
         }// This method will iterate the array of students without iterate de null values
     }
@@ -106,7 +110,7 @@ public class Roster {
         }
         iterate(roster);
     }//print roster sorted by standing
-            public static void main (String[]args){
+            public static void main (String[] args){
 
                 Roster myRoster = new Roster();
                 Profile p1 = new Profile("Smith", "Mario", new Date("12/14/1993"));
@@ -134,5 +138,5 @@ public class Roster {
                 System.out.println("\n********* Sorted by Standing ************\n");
                 myRoster.printByStanding();
 
-            }
-        }
+    }
+}

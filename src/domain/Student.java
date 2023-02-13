@@ -97,19 +97,20 @@ public class Student implements Comparable<Student>{
         }
 
     }
+
     public static void main(String[] args) {
-            Profile p1 = new Profile("Mia", "Carlos", new Date());
-            Profile p2 = new Profile("Maria", "Carlos", new Date());
-            Profile p3 = new Profile("Lucas", "Taylor", new Date());
-            System.out.println(new Date());
-            Student student1= new Student(p1, Major.BAIT , 30);
-            Student student2= new Student(p2, Major.CS, 45);
-            Student student3= new Student(p3, Major.CS, 98);
-            System.out.println(student1);
-            System.out.println(student2);
-            System.out.println(student3);
-            //System.out.println(s.compareTo(t));
-            // System.out.println(student);
+        Profile p1 = new Profile("Mia", "Carlos", new Date());
+        Profile p2 = new Profile("Maria", "Carlos", new Date());
+        Profile p3 = new Profile("Lucas", "Taylor", new Date());
+        System.out.println(new Date());
+        Student student1 = new Student(p1, Major.BAIT, 30);
+        Student student2 = new Student(p2, Major.CS, 45);
+        Student student3 = new Student(p3, Major.CS, 98);
+        System.out.println(student1);
+        System.out.println(student2);
+        System.out.println(student3);
+        //System.out.println(s.compareTo(t));
+        // System.out.println(student);
         String one = "hello";
         String two = "hellu";
         System.out.println(one.compareTo(two));

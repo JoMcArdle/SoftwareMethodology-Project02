@@ -119,7 +119,7 @@ public class RosterManager {
         }
         else{
             roster.add(student);
-            numStudents++;
+            //numStudents++;
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " added to the roster.");
         }
 
@@ -205,23 +205,24 @@ public class RosterManager {
 
         String [] arrOfTokens = elements.split("\\s+");
 
-        this.opCode = arrOfTokens[0];
+            this.opCode = arrOfTokens[0];
 
-        if(arrOfTokens.length > 1) {
-            this.fname = arrOfTokens[1];
-        }
-        if(arrOfTokens.length > 2) {
-            this.lname = arrOfTokens[2];
-        }
-        if(arrOfTokens.length > 3) {
-            this.dob = arrOfTokens[3];
-        }
-        if(arrOfTokens.length > 4) {
-            this.major = arrOfTokens[4];
-        }
-        if(arrOfTokens.length > 5) {
-            this.credits = arrOfTokens[5];
-        }
+            if (arrOfTokens.length > 1) {
+                this.fname = arrOfTokens[1];
+            }
+            if (arrOfTokens.length > 2) {
+                this.lname = arrOfTokens[2];
+            }
+            if (arrOfTokens.length > 3) {
+                this.dob = arrOfTokens[3];
+            }
+            if (arrOfTokens.length > 4) {
+                this.major = arrOfTokens[4];
+            }
+            if (arrOfTokens.length > 5) {
+                this.credits = arrOfTokens[5];
+            }
+
     }
 
     public void run() {
