@@ -101,7 +101,7 @@ public class RosterManager {
         }
         else{
             roster.add(student);
-            //numStudents++;
+            numStudents++;
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " added to the roster.");
         }
         return true;
@@ -155,54 +155,56 @@ public class RosterManager {
     }
 
     private boolean printBySchoolMajorCommand() {
-
-        if(numStudents == 0) {
+         if(numStudents == 0) {
 
             System.out.println("Student roster is empty!");
             return false;
         }
         else {
-            System.out.println("* Student roster sorted by school, major **");
-            roster.printBySchoolMajor();
-            System.out.println("* end of roster **");
-        }
+             System.out.println("* Student roster sorted by school, major **");
+             roster.printBySchoolMajor();
+             System.out.println("* end of roster **");
+
+         }
         return true;
     }
 
     private void listCommand() {
 
-        System.out.println("Prints list of students in specified major, sorted by last name, first name and DOB.");
+        System.out.println("Students in " + this.major);
+        roster.printMajor(this.major);
+        System.out.println("End of list");
+
     }
 
     private boolean changeMajorCommand() {
 
         this.date = new Date(this.dob);
-        Profile stProfile = new Profile(this.lname, this.fname, date);
+        Profile stProfile = new Profile(this.lname, this.fname, this.date);
         this.student = new Student(stProfile, null, Integer.parseInt(this.credits));
 
-        if(numStudents == 0) {
+        if(this.numStudents == 0) {
 
             System.out.println("Student roster is empty!");
             return false;
-        }
-        if(roster.contains(student) == false) {
+        }if(majorError() == false) {
 
+            return false;
+        }if(roster.contains(student) == true) {
+            this.stMajor = Major.valueOf(this.major);
+            student.setMajor(stMajor);
+            roster.updateMajor(student);
+            System.out.println(this.fname + " " + this.lname + " " + this.dob + " major changed to "
+                    + this.major + ".");
+
+            return true;
+        }
+
+        else {
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " is not in the roster.");
             return false;
         }
-        if(majorError() == false) {
 
-            return false;
-        }
-        else {
-            roster.remove(student);
-            Major newMajor = Major.valueOf(this.major);
-            student.setMajor(newMajor);
-            roster.add(student);
-            System.out.println(this.fname + " " + this.lname + " " + this.dob + " major changed to "
-                    + this.major + ".");
-        }
-        return true;
     }
 
     private boolean dateError() {
@@ -258,21 +260,25 @@ public class RosterManager {
         String [] arrOfTokens = elements.split("\\s+");
 
             this.opCode = arrOfTokens[0];
+            if(this.opCode.equals("L")){
+                this.major = arrOfTokens[1].toUpperCase();
+            }else {
 
-            if (arrOfTokens.length > 1) {
-                this.fname = arrOfTokens[1];
-            }
-            if (arrOfTokens.length > 2) {
-                this.lname = arrOfTokens[2];
-            }
-            if (arrOfTokens.length > 3) {
-                this.dob = arrOfTokens[3];
-            }
-            if (arrOfTokens.length > 4) {
-                this.major = arrOfTokens[4];
-            }
-            if (arrOfTokens.length > 5) {
-                this.credits = arrOfTokens[5];
+                if (arrOfTokens.length > 1) {
+                    this.fname = arrOfTokens[1];
+                }
+                if (arrOfTokens.length > 2) {
+                    this.lname = arrOfTokens[2];
+                }
+                if (arrOfTokens.length > 3) {
+                    this.dob = arrOfTokens[3];
+                }
+                if (arrOfTokens.length > 4) {
+                    this.major = arrOfTokens[4];
+                }
+                if (arrOfTokens.length > 5) {
+                    this.credits = arrOfTokens[5];
+                }
             }
 
     }
@@ -299,4 +305,5 @@ public class RosterManager {
         }
         sc.close();
     }
+
 }

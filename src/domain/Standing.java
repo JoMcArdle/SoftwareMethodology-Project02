@@ -1,5 +1,8 @@
 package domain;
-
+/**
+ Standing enum will hold the standing names and their value
+ @author Yovanny Moscoso
+ */
 public enum Standing{
     FRESHMAN(30),
     SOPHOMORE(60),

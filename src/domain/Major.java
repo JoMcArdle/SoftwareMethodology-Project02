@@ -20,7 +20,7 @@ public enum Major{
     }
 
     public String getSchool() {
-        return school;
+        return this.school;
     }
 
 

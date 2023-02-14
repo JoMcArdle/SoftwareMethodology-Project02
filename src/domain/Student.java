@@ -45,11 +45,11 @@ public class Student implements Comparable<Student>{
     public boolean equals(Object obj) {
         if (obj instanceof Student) {
             Student s = (Student) obj;
-            if (s.profile.equals(this.profile)) {
-                return true;
-            } else {
-                return false;
-            }
+           if(this.profile.equals(s.profile)){
+               return true;
+           }
+        }else {
+            return false;
         }
         return false;
     }
@@ -68,7 +68,7 @@ public class Student implements Comparable<Student>{
         }else if(this.returnStanding(this).compareTo(student.returnStanding(student)) < 0){
             return -1;
         }else{
-            return this.profile.compareTo(student.profile);
+            return 0;
         }
     }
     public int compareByMajor(Student student){
@@ -81,7 +81,7 @@ public class Student implements Comparable<Student>{
         }else if(this.major.name().compareTo(student.major.name()) < 0){
             return -1;
         }else {
-            return this.profile.compareTo(student.profile);
+            return 0;
         }
     }
     private String returnStanding(Student s){
@@ -98,23 +98,60 @@ public class Student implements Comparable<Student>{
         }
 
     }
+    public int compareBySchool(Student s){
+        if(this.getMajor().getSchool().compareTo(s.getMajor().getSchool()) > 0){
+            return 1;
+        }else if(this.getMajor().getSchool().compareTo(s.getMajor().getSchool()) < 0){
+            return -1;
+        }else if(this.profile.compareTo(s.profile) > 0){
+            return 1;
+        }else if(this.profile.compareTo(s.profile) < 0){
+            return -1;
+        }else {
+            return 0;
+        }
+
+    }
 
     public static void main(String[] args) {
-        Profile p1 = new Profile("Mia", "Carlos", new Date());
-        Profile p2 = new Profile("Maria", "Carlos", new Date());
-        Profile p3 = new Profile("Lucas", "Taylor", new Date());
-        System.out.println(new Date());
+        Profile p1 = new Profile("Lopez", "Juan", new Date("10/12/1992"));
+        Profile p2 = new Profile("Serna", "Maria", new Date("15/02/1993"));
+        Profile p3 = new Profile("Tylor", "Lucas", new Date("12/13/1993"));
+        Profile p4 = new Profile("Tylor", "Lucas", new Date("12/13/1993"));
+        Profile p5 = new Profile("Tylor", "Vanessa", new Date("10/25/1986"));
+        Profile p6 = new Profile("Tylor", "Vanessa", new Date("10/20/1989"));
         Student student1 = new Student(p1, Major.BAIT, 30);
         Student student2 = new Student(p2, Major.CS, 45);
         Student student3 = new Student(p3, Major.CS, 98);
-        System.out.println(student1);
-        System.out.println(student2);
-        System.out.println(student3);
-        //System.out.println(s.compareTo(t));
+        Student student4 = new Student(p4, null, 0);
+        Student student5 = new Student(p5, null, 0);
+        Student student6 = new Student(p6, null, 0);
+
+        /** Test cases*/
+        /*
+        System.out.println(student2.compareTo(student1));
+        System.out.println(student2.compareTo(student3));
+        System.out.println(student3.compareTo(student4));
+        System.out.println(student5.compareTo(student4));
+        System.out.println(student6.compareTo(student5));
+        */
+
+        Roster roster = new Roster();
+        roster.add(student1);
+        roster.add(student2);
+        roster.add(student3);
+        roster.add(student4);
+        roster.add(student5);
+        roster.add(student6);
+        Student student7 = new Student(p6, null, 0);
+        System.out.println(roster.contains(student7));
+        //System.out.println(student1);
+        //System.out.println(student2);
+        //System.out.println(student3);
         // System.out.println(student);
-        String one = "hello";
-        String two = "hellu";
-        System.out.println(one.compareTo(two));
+        //String one = "hello";
+        //String two = "hellu";
+       // System.out.println(one.compareTo(two));
 
 
     }

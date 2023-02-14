@@ -1,22 +1,25 @@
 package domain;
 
 /**
- Student class will represent a student entity in our program
+ Roster class is a student array based class.
  @author Yovanny Moscoso
  */
 public class Roster {
     private Student[] roster;
     private int size = 100;
-    private int numStudents = 0;
-    private int location = 0;
+    public int numStudents = 0;
+    private int location;
     private static final int INCREASE_CAPACITY = 4;
+    private static final int NOT_FOUND= -1;
     public Roster(){
+
         roster = new Student[size];
     }
-    private int find(Student student) {
-        int result = -1;
-        for (int i = location; i< numStudents; i++){
-            if(student.equals(roster[i])){
+    public int find(Student student) {
+        location = 0;
+        int result = NOT_FOUND;
+        for (int i = location; i< numStudents; i++) {
+            if (roster[location].equals(student)) {
                 result = location;
                 return result;
             }else{
@@ -34,31 +37,32 @@ public class Roster {
     } //increase the array capacity by 4
 
     public boolean add(Student student){
-        if(numStudents == roster.length)
+        if(numStudents == roster.length) {
             grow();
-        find(student);
-        for(int i = numStudents; i>location; i--){
-            roster[i] = roster[i-1];
         }
-        roster[location] = student;
+        roster[numStudents] = student;
         numStudents++;
         return true;
+
     } //add student to end of array
     public boolean remove(Student student){
         if(find(student) >= 0){
-            for (int i = location; i<= numStudents -2; i++){
+            for (int i = location; i <= numStudents -2; i++){
                 roster[i] = roster[i+1];
             }
             roster[numStudents-1] = null;
+            numStudents--;
             return true;
+        }else {
+            return false;
         }
-        return false;
     }//maintain the order after remove
     public boolean contains(Student student){
         if(find(student) >= 0){
             return true;
+        }else {
+            return false;
         }
-        return false;
     } //if the student is in roster
     private void iterate(Student[] students){
         for(int i = 0; i < numStudents; i++){
@@ -110,6 +114,20 @@ public class Roster {
         }
         iterate(roster);
     }//print roster sorted by standing
+    public void printMajor(String schoolName){
+        for(int i = 0; i < numStudents; i++){
+            if(schoolName.equals(roster[i].getMajor().getSchool())){
+                System.out.println(roster[i]);
+            }
+        }
+    }
+    public Student updateMajor(Student s){
+        if (find(s) >= 0){
+             roster[find(s)].setMajor(s.getMajor());
+        return roster[find(s)];
+        }
+        return s;
+    }
             public static void main (String[] args){
 
                 Roster myRoster = new Roster();
@@ -119,18 +137,25 @@ public class Roster {
                 Profile p4 = new Profile("Edison", "Thomas", new Date("02/25/1190"));
                 Profile p5 = new Profile("Fernandez", "Ana", new Date("05/13/2004"));
                 Profile p6 = new Profile("Gonzales", "Ana", new Date("05/13/2004"));
+                Profile p7 = new Profile("gonzales", "ana", new Date("05/13/2004"));
                 Student s1 = new Student(p1, Major.EE, 100);
                 Student s2 = new Student(p2, Major.EE, 45);
                 Student s3 = new Student(p3, Major.ITI, 75);
                 Student s4 = new Student(p4, Major.ITI, 75);
                 Student s5 = new Student(p5, Major.BAIT, 80);
                 Student s6 = new Student(p6, Major.CS, 90);
+                Student s7 = new Student(p7, Major.MATH,  0);
                 myRoster.add(s1);
                 myRoster.add(s2);
                 myRoster.add(s3);
                 myRoster.add(s4);
                 myRoster.add(s5);
                 myRoster.add(s6);
+                System.out.println(myRoster.updateMajor(s7));
+                System.out.println(s6.equals(s7));
+                System.out.println(myRoster.find(s7));
+                System.out.println(myRoster.find(s6));
+                System.out.println(myRoster.contains(s7));
                 System.out.println("\n********* Sorted by Profile ************\n");
                 myRoster.print();
                 System.out.println("\n********* Sorted by Major ************\n");
