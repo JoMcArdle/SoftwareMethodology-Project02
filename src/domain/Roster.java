@@ -128,7 +128,7 @@ public class Roster {
         }
         return s;
     }
-            public static void main (String[] args){
+            public static void main(String[] args){
 
                 Roster myRoster = new Roster();
                 Profile p1 = new Profile("Smith", "Mario", new Date("12/14/1993"));
@@ -162,6 +162,7 @@ public class Roster {
                 myRoster.printBySchoolMajor();
                 System.out.println("\n********* Sorted by Standing ************\n");
                 myRoster.printByStanding();
+
 
     }
 }

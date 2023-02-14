@@ -2,8 +2,8 @@ package domain;
 import java.util.Scanner;
 
 /**
- User interface class that handles line commands entered on the console and displays the results on the console.
- @author Joshua McArdle
+ * User interface class that handles line commands entered on the console and displays the results on the console.
+ * @author Joshua McArdle
  */
 public class RosterManager {
 
@@ -20,13 +20,18 @@ public class RosterManager {
     private Date date;
     private static final int MIN_AGE = 16;
 
-
-
+    /**
+     * Empty constructor, used by the driver class RunProject1.
+     */
     public RosterManager() {
 
     }
 
-    private boolean operations() {
+    /**
+     * Takes in the operation code from a line command and uses a switch case to perform various operations.
+     * Calls different helper methods based on the operation code.
+     */
+    private void operations() {
 
         switch(opCode) {
             case "A":
@@ -59,15 +64,20 @@ public class RosterManager {
 
             case "Q":
                 System.out.println("Roster Manager terminated.");
-                return true;
+                break;
 
             default:
                 System.out.println(opCode + " is an invalid command!");
                 break;
         }
-        return true;
+
     }
 
+    /**
+     * Helper method for operations(), adds a student to the roster.
+     * @return false if date of birth is invalid, major doesn't exist, credits are invalid, or if student exists in
+     * the roster already and true otherwise.
+     */
     private boolean addCommand() {
 
         this.date = new Date(this.dob);
@@ -107,6 +117,10 @@ public class RosterManager {
         return true;
     }
 
+    /**
+     * Helper method for operations(), removes a student from the roster.
+     * @return false if student is not in the roster and true otherwise.
+     */
     private boolean removeCommand() {
 
         this.date = new Date(this.dob);
@@ -124,6 +138,10 @@ public class RosterManager {
         return true;
     }
 
+    /**
+     * Helper method for operations(), prints out the roster of students sorted by last name, first name and DOB.
+     * @return false if roster is empty and true otherwise.
+     */
     private boolean printCommand() {
 
         if(numStudents == 0) {
@@ -139,6 +157,10 @@ public class RosterManager {
         return true;
     }
 
+    /**
+     * Helper method for operations(), prints out the roster of students sorted by standing.
+     * @return false if roster is empty and true otherwise.
+     */
     private boolean printByStandingCommand() {
 
         if(numStudents == 0) {
@@ -154,6 +176,10 @@ public class RosterManager {
         return true;
     }
 
+    /**
+     * Helper method for operations(), prints out the roster of students sorted by school and major.
+     * @return false if roster is empty and true otherwise.
+     */
     private boolean printBySchoolMajorCommand() {
          if(numStudents == 0) {
 
@@ -169,6 +195,10 @@ public class RosterManager {
         return true;
     }
 
+    /**
+     * Helper method for operations(), prints out the roster of students in a specified school, sorted by last name,
+     * first name, and DOB.
+     */
     private void listCommand() {
 
         System.out.println("Students in " + this.major);
@@ -177,6 +207,10 @@ public class RosterManager {
 
     }
 
+    /**
+     * Helper method for operations(), changes a student's major.
+     * @return false if roster is empty, student is not in the roster, or major doesn't exist and true otherwise.
+     */
     private boolean changeMajorCommand() {
 
         this.date = new Date(this.dob);
@@ -204,8 +238,13 @@ public class RosterManager {
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " is not in the roster.");
             return false;
         }
-
     }
+
+    /**
+     * Helper method for addCommand(), calls the isValid() method from Date class and prints whether a student is
+     * younger than 16 years old or if the DOB is invalid.
+     * @return false if student is younger than 16 years old or if DOB is invalid and true otherwise.
+     */
 
     private boolean dateError() {
 
@@ -225,6 +264,10 @@ public class RosterManager {
         return true;
     }
 
+    /**
+     * Helper method for addCommand() and changeMajorCommand(), checks if the given major exists.
+     * @return false if major is invalid and true otherwise.
+     */
     private boolean majorError() {
 
         if(!(major.equalsIgnoreCase("CS") || major.equalsIgnoreCase("MATH")
@@ -237,6 +280,10 @@ public class RosterManager {
         return true;
     }
 
+    /**
+     * Helper method for addCommand(), checks if the number of credits is valid.
+     * @return false if credits is a negative number or not an integer and true otherwise.
+     */
     private boolean creditsError() {
 
         try {
@@ -255,6 +302,11 @@ public class RosterManager {
         return true;
     }
 
+    /**
+     * Helper method for run() command, uses .split() method to grab the operation code and data tokens necessary to
+     * manage the student roster.
+     * @param elements the String input from line commands that is to be converted.
+     */
     private void convertToTokens(String elements) {
 
         String [] arrOfTokens = elements.split("\\s+");
@@ -283,6 +335,9 @@ public class RosterManager {
 
     }
 
+    /**
+     * Method for parsing input from the command line and continuously reads line commands until the user quits.
+     */
     public void run() {
 
         Scanner sc = new Scanner(System.in);
