@@ -29,7 +29,7 @@ public enum Major{
     }
 
     public String toString(){
-        return this.school + "(" + this.departmentNumber+  this.name()+ ")";
+        return "(" + this.departmentNumber + " " + this.name() + " " + this.school + ")";
     }
     public static void main(String[] args) {
     Major m = Major.CS;

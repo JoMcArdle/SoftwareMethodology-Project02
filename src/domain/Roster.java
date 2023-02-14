@@ -106,33 +106,33 @@ public class Roster {
         }
         iterate(roster);
     }//print roster sorted by standing
-            public static void main (String[]args){
+    public static void main (String[]args){
 
-                Roster myRoster = new Roster();
-                Profile p1 = new Profile("Smith", "Mario", new Date("12/14/1993"));
-                Profile p2 = new Profile("Taylor", "Maria", new Date("12/15/1993"));
-                Profile p3 = new Profile("Johnson", "Michael", new Date("11/18/1985"));
-                Profile p4 = new Profile("Edison", "Thomas", new Date("02/25/1190"));
-                Profile p5 = new Profile("Fernandez", "Ana", new Date("05/13/2004"));
-                Profile p6 = new Profile("Gonzales", "Ana", new Date("05/13/2004"));
-                Student s1 = new Student(p1, Major.EE, 100);
-                Student s2 = new Student(p2, Major.EE, 45);
-                Student s3 = new Student(p3, Major.ITI, 75);
-                Student s4 = new Student(p4, Major.ITI, 75);
-                Student s5 = new Student(p5, Major.BAIT, 80);
-                Student s6 = new Student(p6, Major.CS, 90);
-                myRoster.add(s1);
-                myRoster.add(s2);
-                myRoster.add(s3);
-                myRoster.add(s4);
-                myRoster.add(s5);
-                myRoster.add(s6);
-                System.out.println("\n********* Sorted by Profile ************\n");
-                myRoster.print();
-                System.out.println("\n********* Sorted by Major ************\n");
-                myRoster.printBySchoolMajor();
-                System.out.println("\n********* Sorted by Standing ************\n");
-                myRoster.printByStanding();
+        Roster myRoster = new Roster();
+        Profile p1 = new Profile("Smith", "Mario", new Date("12/14/1993"));
+        Profile p2 = new Profile("Taylor", "Maria", new Date("12/15/1993"));
+        Profile p3 = new Profile("Johnson", "Michael", new Date("11/18/1985"));
+        Profile p4 = new Profile("Edison", "Thomas", new Date("02/25/1190"));
+        Profile p5 = new Profile("Fernandez", "Ana", new Date("05/13/2004"));
+        Profile p6 = new Profile("Gonzales", "Ana", new Date("05/13/2004"));
+        Student s1 = new Student(p1, Major.EE, 100);
+        Student s2 = new Student(p2, Major.EE, 45);
+        Student s3 = new Student(p3, Major.ITI, 75);
+        Student s4 = new Student(p4, Major.ITI, 75);
+        Student s5 = new Student(p5, Major.BAIT, 80);
+        Student s6 = new Student(p6, Major.CS, 90);
+        myRoster.add(s1);
+        myRoster.add(s2);
+        myRoster.add(s3);
+        myRoster.add(s4);
+        myRoster.add(s5);
+        myRoster.add(s6);
+        System.out.println("\n********* Sorted by Profile ************\n");
+        myRoster.print();
+        System.out.println("\n********* Sorted by Major ************\n");
+        myRoster.printBySchoolMajor();
+        System.out.println("\n********* Sorted by Standing ************\n");
+        myRoster.printByStanding();
 
-            }
-        }
+    }
+}
