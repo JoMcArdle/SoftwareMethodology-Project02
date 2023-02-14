@@ -55,7 +55,7 @@ public class Student implements Comparable<Student>{
     }
     @Override
     public String toString() {
-        return this.profile + ", " + this.major.toString() + ", credits completed: " + this.creditCompleted + " (" + returnStanding(this) + ")";
+        return this.profile + " " + this.major.toString() + ", credits completed: " + this.creditCompleted + " (" + returnStanding(this) + ")";
     }
 
     @Override
@@ -152,7 +152,6 @@ public class Student implements Comparable<Student>{
         //String one = "hello";
         //String two = "hellu";
        // System.out.println(one.compareTo(two));
-
 
     }
 }
