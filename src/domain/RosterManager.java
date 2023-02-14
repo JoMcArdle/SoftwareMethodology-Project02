@@ -200,10 +200,15 @@ public class RosterManager {
      * first name, and DOB.
      */
     private void listCommand() {
+        if(!(this.major.equalsIgnoreCase("SAS") || this.major.equalsIgnoreCase("SOE") || this.major.equalsIgnoreCase("SC&I")
+        || this.major.equalsIgnoreCase("RBS"))){
+            System.out.println("School doesn't exist: " + this.major);
+        }else {
 
-        System.out.println("Students in " + this.major);
-        roster.printMajor(this.major);
-        System.out.println("End of list");
+            System.out.println("Students in " + this.major);
+            roster.printMajor(this.major);
+            System.out.println("End of list");
+        }
 
     }
 
@@ -268,7 +273,7 @@ public class RosterManager {
      * Helper method for addCommand() and changeMajorCommand(), checks if the given major exists.
      * @return false if major is invalid and true otherwise.
      */
-    private boolean majorError() {
+    private boolean majorError(){
 
         if(!(major.equalsIgnoreCase("CS") || major.equalsIgnoreCase("MATH")
                 || major.equalsIgnoreCase("EE") || major.equalsIgnoreCase("ITI")

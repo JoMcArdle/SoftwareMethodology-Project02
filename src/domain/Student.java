@@ -1,7 +1,5 @@
 package domain;
 
-import java.util.Comparator;
-
 /**
  Student class will represent a student entity in our program
  @author Yovanny Moscoso
@@ -13,35 +11,71 @@ public class Student implements Comparable<Student>{
     private int creditCompleted;
     private Standing standing;
 
+    /**
+     * Empty constructor
+     */
     public Student() {
 
     } // Empty constructor
 
+    /**
+     * Constructor that initializes all the attributes of the student
+     * @param profile
+     * @param major
+     * @param creditCompleted
+     */
     public Student(Profile profile, Major major, int creditCompleted) {
         this.profile = profile;
         this.major = major;
         this.creditCompleted = creditCompleted;
     }
+
+    /**
+     * getProfile will return the student profile
+     * @return profile
+     */
     public Profile getProfile() {
         return this.profile;
     }
 
+    /**
+     * getMajor will return the student major
+     * @return major
+     */
     public Major getMajor() {
         return this.major;
     }
 
+    /**
+     * setMajor will set the major to a new value
+     * @param major
+     */
     public void setMajor(Major major) {
         this.major = major;
     }
 
+    /**
+     * getCreditCompleted method will return the number of credits that a student has completed
+     * @return return an int which represents the number of credits that a student has completed
+     */
     public int getCreditCompleted() {
         return this.creditCompleted;
     }
+
+    /**
+     * setCreditCompleted will receive the number of credits and will set it to the number of credits that a student has.
+     * @param creditCompleted
+     */
 
     public void setCreditCompleted(int creditCompleted) {
         this.creditCompleted = creditCompleted;
     }
 
+    /**
+     * The equals method will compare two students and see if they are equal
+     * @param obj the param obj appears because we need to override this method which appears as an object type
+     * @return it will return true if the students are equal. If not, it will return false
+     */
     public boolean equals(Object obj) {
         if (obj instanceof Student) {
             Student s = (Student) obj;
@@ -53,6 +87,11 @@ public class Student implements Comparable<Student>{
         }
         return false;
     }
+
+    /**
+     * The toString method will print a string representation of a student object
+     * @return the string representation of the student
+     */
     @Override
     public String toString() {
 
@@ -60,10 +99,21 @@ public class Student implements Comparable<Student>{
                 + " (" + returnStanding(this) + ")";
     }
 
+    /**
+     * compareTo will compare the profile of two students.
+     * @param student the object to be compared.
+     * @return If the current object is greater than the object to be compared, it will return 1, if it is lower it will return -1, if the profiles are equal it will return 0
+     */
     @Override
     public int compareTo(Student student) {
         return this.profile.compareTo(student.profile);
     }
+
+    /**
+     * compareTo will compare the standing of two students.
+     * @param student
+     * @return If the current object standing is greater than the standing of the object to be compared, it will return 1, if it is lower it will return -1, if the standings are equal it will return 0
+     */
     public int compareByStanding(Student student){
         if(this.returnStanding(this).compareTo(student.returnStanding(student)) > 0){
             return 1;
@@ -73,6 +123,12 @@ public class Student implements Comparable<Student>{
             return 0;
         }
     }
+
+    /**
+     * compareTo will compare the standing of two students.
+     * @param student the object to be compared.
+     * @return If the current object major is greater than the major of the object to be compared, it will return 1, if it is lower it will return -1, if the majors are equal it will return 0
+     */
     public int compareByMajor(Student student){
         if(this.major.getSchool().compareTo(student.major.getSchool()) > 0){
             return 1;
@@ -86,6 +142,12 @@ public class Student implements Comparable<Student>{
             return 0;
         }
     }
+
+    /**
+     * returnStanding will return the what is the student status (FRESMAN, SOPHOMORE, JUNIOR, SENIOR) based on the credits completed
+     * @param s
+     * @return it will return s string representation of the status of a student
+     */
     private String returnStanding(Student s){
         if(s.getCreditCompleted() >= 0 && s.getCreditCompleted() < standing.FRESHMAN.getNumberOfCredits()){
             return standing.FRESHMAN.name().substring(0, 1).toUpperCase()
@@ -110,6 +172,13 @@ public class Student implements Comparable<Student>{
         }
 
     }
+
+    /**
+     * compareBySchool method will compare the student major.
+     * @param s
+     * @return it returns 1 if the current object major is greater than the student object major to be compared. If is lower, it will return -1,
+     * if the majors are equal, it will compare the profiles.
+     */
     public int compareBySchool(Student s){
         if(this.getMajor().getSchool().compareTo(s.getMajor().getSchool()) > 0){
             return 1;
@@ -140,29 +209,19 @@ public class Student implements Comparable<Student>{
         Student student6 = new Student(p6, null, 0);
 
         /** Test cases*/
-        /*
+
         System.out.println(student2.compareTo(student1));
         System.out.println(student2.compareTo(student3));
         System.out.println(student3.compareTo(student4));
         System.out.println(student5.compareTo(student4));
         System.out.println(student6.compareTo(student5));
-        */
 
-        Roster roster = new Roster();
-        roster.add(student1);
-        roster.add(student2);
-        roster.add(student3);
-        roster.add(student4);
-        roster.add(student5);
-        roster.add(student6);
         Student student7 = new Student(p6, null, 0);
-        System.out.println(roster.contains(student7));
+
         //System.out.println(student1);
         //System.out.println(student2);
         //System.out.println(student3);
         // System.out.println(student);
-        //String one = "hello";
-        //String two = "hellu";
        // System.out.println(one.compareTo(two));
 
     }

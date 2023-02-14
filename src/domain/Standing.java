@@ -9,12 +9,19 @@ public enum Standing{
     JUNIOR(90),
     SENIOR(120);
     private final int numberOfCredits;
+
+    /**
+     * Constructor that initializes the values
+     * @param numberOfCredits
+     */
     Standing(int numberOfCredits){
         this.numberOfCredits = numberOfCredits;
     }
-    public int numberOfCredits(){
-        return this.numberOfCredits;
-    }
+
+    /**
+     * numberOfCredits will return the number of credits
+     * @return
+     */
     public int getNumberOfCredits(){
         return this.numberOfCredits;
     }

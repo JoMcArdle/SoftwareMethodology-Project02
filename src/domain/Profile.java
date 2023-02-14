@@ -8,26 +8,53 @@ public class Profile implements Comparable<Profile> {
     private String fname;
     private Date dob;
 
+    /**
+     * Empty constructor
+     */
     public Profile(){
 
     }
+
+    /**
+     * Constructor that initializes all the values
+     * @param lname
+     * @param fname
+     * @param dob
+     */
     public Profile(String lname, String fname, Date dob ){
         this.lname = lname;
         this.fname = fname;
         this.dob = dob;
     }
 
+    /**
+     * getLname will return the last name
+     * @return
+     */
     public String getLname() {
         return lname;
     }
-
+    /**
+     * getFname will return the first name
+     * @return
+     */
     public String getFname() {
         return fname;
     }
-
+    /**
+     * getDob will return the date of birth
+     * @return
+     */
     public Date getDob() {
         return dob;
     }
+
+    /**
+     * The equals method will compare two profiles and see if they are equal
+     * @param obj the param obj appears because we need to override this method which appears as an object type
+     *  @return it will return true if the profiles are equal. If not, it will return false
+     *
+     */
 
     @Override
     public boolean equals(Object obj){
@@ -40,6 +67,11 @@ public class Profile implements Comparable<Profile> {
         }
     }
 
+    /**
+     * The compareTo method will compare 2 profiles.
+     * @param profile the object to be compared.
+     * @return If the current object profile is greater than the other object, it will return 1. if the current object is lower, it will return -1. If they are the same it will return 0.
+     */
     @Override
     public int compareTo(Profile profile) {
 
@@ -59,7 +91,10 @@ public class Profile implements Comparable<Profile> {
             return 0;
         }
     }
-
+    /**
+     * The toString method will print a string representation of a profile object
+     * @return the string representation of the profile
+     */
     @Override
     public String toString(){
         return this.fname + " " + this.lname + " " + this.dob.toString();
