@@ -55,7 +55,9 @@ public class Student implements Comparable<Student>{
     }
     @Override
     public String toString() {
-        return this.profile + " " + this.major.toString() + ", credits completed: " + this.creditCompleted + " (" + returnStanding(this) + ")";
+
+        return this.profile + " " + this.major.toString() + " credits completed: " + this.creditCompleted
+                + " (" + returnStanding(this) + ")";
     }
 
     @Override
@@ -85,14 +87,24 @@ public class Student implements Comparable<Student>{
         }
     }
     private String returnStanding(Student s){
-        if(s.getCreditCompleted() > 0 && s.getCreditCompleted() < standing.FRESHMAN.getNumberOfCredits()){
-            return standing.FRESHMAN.name();
-        } else if(s.getCreditCompleted() >= standing.FRESHMAN.getNumberOfCredits() && s.getCreditCompleted() < standing.SOPHOMORE.getNumberOfCredits()){
-            return standing.SOPHOMORE.name();
-        } else if(s.getCreditCompleted() >= standing.SOPHOMORE.getNumberOfCredits() && s.getCreditCompleted() < standing.JUNIOR.getNumberOfCredits()){
-            return standing.JUNIOR.name();
+        if(s.getCreditCompleted() >= 0 && s.getCreditCompleted() < standing.FRESHMAN.getNumberOfCredits()){
+            return standing.FRESHMAN.name().substring(0, 1).toUpperCase()
+                    + standing.FRESHMAN.name().substring(1).toLowerCase();
+
+        } else if(s.getCreditCompleted() >= standing.FRESHMAN.getNumberOfCredits()
+                && s.getCreditCompleted() < standing.SOPHOMORE.getNumberOfCredits()){
+            return standing.SOPHOMORE.name().substring(0, 1).toUpperCase()
+                    + standing.SOPHOMORE.name().substring(1).toLowerCase();
+
+        } else if(s.getCreditCompleted() >= standing.SOPHOMORE.getNumberOfCredits()
+                && s.getCreditCompleted() < standing.JUNIOR.getNumberOfCredits()){
+            return standing.JUNIOR.name().substring(0, 1).toUpperCase()
+                    + standing.JUNIOR.name().substring(1).toLowerCase();
+
         } else if(s.getCreditCompleted() >= standing.JUNIOR.getNumberOfCredits()){
-            return standing.SENIOR.name();
+            return standing.SENIOR.name().substring(0, 1).toUpperCase()
+                    + standing.SENIOR.name().substring(1).toLowerCase();
+
         }else{
             return "not a valid number of credits";
         }

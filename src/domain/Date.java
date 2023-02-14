@@ -3,13 +3,11 @@ package domain;
 import java.util.Calendar;
 
 /**
- Date class that provides methods for creating a Student's DOB and checking if a given date is valid.
- @author Joshua McArdle
+ * Date class that provides methods for creating a Student's DOB and checking if a given date is valid.
+ * @author Joshua McArdle
  */
 public class Date implements Comparable<Date> {
-    private int year;
-    private int month;
-    private int day;
+
     public static final int JANUARY = 1;
     public static final int FEBRUARY = 2;
     public static final int MARCH = 3;
@@ -32,9 +30,16 @@ public class Date implements Comparable<Date> {
     public static final int QUATERCENTENNIAL = 400;
     public static final int MAX_YEAR = 1900;
     public static final int MIN_AGE = 16;
+    public static final int DATE_IS_GREATER = 1;
+    public static final int DATE_IS_LESS = -1;
+    public static final int DATE_IS_EQUAL = 0;
+    private int year;
+    private int month;
+    private int day;
 
-
-
+    /**
+     * Constructor that creates an object with today's date using the Calendar class.
+     */
     public Date() {
 
         Calendar today = Calendar.getInstance();
@@ -42,9 +47,12 @@ public class Date implements Comparable<Date> {
         this.month = today.get(Calendar.MONTH) + 1;
         this.year = today.get(Calendar.YEAR);
 
+    }
 
-    } //create an object with today’s date (see Calendar class)
-
+    /**
+     * Parameterized Constructor that creates an object with a given date.
+     * @param date a String input in "mm/dd/yyyy" format
+     */
     public Date(String date) {
 
         String strDate = date;
@@ -53,23 +61,39 @@ public class Date implements Comparable<Date> {
         this.day = Integer.parseInt(arrayOfDate[1]);
         this.year = Integer.parseInt(arrayOfDate[2]);
 
-    } //take “mm/dd/yyyy” and create a Date object
+    }
 
+    /**
+     * Getter method that returns the day.
+     * @return day
+     */
     public int getDay() {
 
         return day;
     }
 
+    /**
+     * Getter method that returns the month.
+     * @return month
+     */
     public int getMonth() {
 
         return month;
     }
 
+    /**
+     * Getter method that returns the year.
+     * @return year
+     */
     public int getYear() {
 
         return year;
     }
 
+    /**
+     * Helper method for isValid(), checks the month and special cases involving the day and leap years.
+     * @return true if month is valid and false otherwise.
+     */
     private boolean checkMonth() {
 
         if(this.month < JANUARY || this.month > DECEMBER) {
@@ -104,8 +128,12 @@ public class Date implements Comparable<Date> {
             }
         }
         return true;
-    } //helper method for isValid()
+    }
 
+    /**
+     * Helper method for isValid(), checks the year and special cases involving the current date.
+     * @return true if year is valid and false otherwise.
+     */
     private boolean checkYear() {
 
         Date currentDate = new Date();
@@ -135,8 +163,12 @@ public class Date implements Comparable<Date> {
         }
         return true;
 
-    } //helper method for isValid()
+    }
 
+    /**
+     * Helper method for checkMonth(), checks to see if the year is a leap year or not.
+     * @return true if year is a leap year and false otherwise.
+     */
     private boolean checkLeapYear() {
 
         if(this.year % QUATERCENTENNIAL == 0) {
@@ -155,8 +187,12 @@ public class Date implements Comparable<Date> {
 
             return false;
         }
-    } //helper method for checkMonth()
+    }
 
+    /**
+     * Checks if a date is a valid calendar date.
+     * @return true if date is valid and false otherwise.
+     */
     public boolean isValid() {
 
 
@@ -166,49 +202,60 @@ public class Date implements Comparable<Date> {
         }
         return false;
 
-    } //check if a date is a valid calendar date
+    }
 
+    /**
+     * Override method that compares two dates' year, month and day.
+     * @param o the object to be compared.
+     * @return DATE_IS_LESS, DATE_IS_EQUAL, or DATE_IS_LESS if this date is less than, equal to or
+     * greater than the other date.
+     */
     @Override
     public int compareTo(Date o) {
 
         if(this.year > o.year) {
 
-            return 1;
+            return DATE_IS_GREATER;
         }
         else if(this.year < o.year) {
 
-            return -1;
+            return DATE_IS_LESS;
         }
         else if(this.year == o.year) {
 
             if (this.month > o.month) {
 
-                return 1;
+                return DATE_IS_GREATER;
 
             } else if (this.month < o.month) {
 
-                return -1;
+                return DATE_IS_LESS;
 
             } else if (this.month == o.month) {
 
                 if (this.day > o.day) {
 
-                    return 1;
+                    return DATE_IS_GREATER;
 
                 } else if (this.day < o.day) {
 
-                    return -1;
+                    return DATE_IS_LESS;
 
                 } else {
 
-                    return 0;
+                    return DATE_IS_EQUAL;
                 }
             }
         }
 
-        return 0;
+        return DATE_IS_EQUAL;
     }
 
+    /**
+     * Override method that sees if two dates are equal to each other.
+     * @param obj, compared with this date.
+     * @return 0 if both dates are equal and false otherwise.
+     */
     @Override
     public boolean equals(Object obj) {
         if (obj instanceof Date) {
@@ -220,6 +267,10 @@ public class Date implements Comparable<Date> {
         return false;
     }
 
+    /**
+     * Override method that returns the date in "mm/dd/yyyy" format.
+     * @return month, day and year in "mm/dd/yyyy" format.
+     */
     @Override
     public String toString() {
 
@@ -227,9 +278,13 @@ public class Date implements Comparable<Date> {
 
     }
 
+    /**
+     * Testbed main for isValid() method, creates the specified test cases and sees whether a date is valid or not.
+     * @param args
+     */
     public static void main(String[] args) {
 
-        //d1-d4 are my test cases
+        //d1-d7 are my test cases. d1-d5 are invalid dates, d6-d7 are valid dates.
         Date d1 = new Date("1/13/600");
 
         Date d2 = new Date("-50/20/1960");
@@ -238,22 +293,28 @@ public class Date implements Comparable<Date> {
 
         Date d4 = new Date("1/20/2011");
 
+        Date d5 = new Date("3/11/2007");
+
+        Date d6 = new Date("2/29/2004");
+
+        Date d7 = new Date("4/11/1996");
+
         //d4-d10 are the provided test cases in Project1TestCases.txt
-        Date d5 = new Date("2/29/2019");
+        Date d8 = new Date("2/29/2019");
 
-        Date d6 = new Date("9/2/2022");
+        Date d9 = new Date("9/2/2022");
 
-        Date d7 = new Date("2/29/2003");
+        Date d10 = new Date("2/29/2003");
 
-        Date d8 = new Date("4/31/2003");
+        Date d11 = new Date("4/31/2003");
 
-        Date d9 = new Date("13/31/2003");
+        Date d12 = new Date("13/31/2003");
 
-        Date d10 = new Date("3/32/2003");
+        Date d13 = new Date("3/32/2003");
 
-        Date d11 = new Date("-1/31/2003");
+        Date d14 = new Date("-1/31/2003");
 
-        if(d4.isValid() == true) {
+        if(d1.isValid() == true) {
 
             System.out.println("This is a valid date.");
         }
