@@ -1,4 +1,4 @@
-package domain;
+package project2;
 /**
  Profile represents a student profile in our program
  @author Yovanny Moscoso

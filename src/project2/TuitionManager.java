@@ -1,11 +1,11 @@
-package domain;
+package project2;
 import java.util.Scanner;
 
 /**
  * User interface class that handles line commands entered on the console and displays the results on the console.
  * @author Joshua McArdle
  */
-public class RosterManager {
+public class TuitionManager {
 
     private String opCode;
     private String fname;
@@ -23,7 +23,7 @@ public class RosterManager {
     /**
      * Empty constructor, used by the driver class RunProject1.
      */
-    public RosterManager() {
+    public TuitionManager() {
 
     }
 

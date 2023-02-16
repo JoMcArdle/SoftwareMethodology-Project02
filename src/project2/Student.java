@@ -1,10 +1,10 @@
-package domain;
+package project2;
 
 /**
  Student class will represent a student entity in our program
  @author Yovanny Moscoso
  */
-public class Student implements Comparable<Student>{
+public abstract class Student implements Comparable<Student>{
 
     private Profile profile;
     private Major major; //Major is an enum type
@@ -193,6 +193,30 @@ public class Student implements Comparable<Student>{
         }
 
     }
+
+    /**
+     * Polymorphism is used here.
+     * @param creditEnrolled
+     * @return
+     */
+    public boolean isValid(int creditEnrolled) {
+
+        //code here
+        return true;
+    }
+
+    /**
+     * Polymorphism is used here.
+     * @param creditsEnrolled
+     * @return
+     */
+    public abstract double tuitionDue(int creditsEnrolled);
+
+    /**
+     * Polymorphism is used here.
+     * @return
+     */
+    public abstract boolean isResident();
 
     public static void main(String[] args) {
         Profile p1 = new Profile("Lopez", "Juan", new Date("10/12/1992"));
