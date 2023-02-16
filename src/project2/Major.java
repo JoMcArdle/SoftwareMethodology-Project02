@@ -1,4 +1,4 @@
-package domain;
+package project2;
 
 /**
     Major enum will show the different majors in a school by schools

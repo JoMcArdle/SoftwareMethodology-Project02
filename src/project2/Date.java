@@ -1,4 +1,4 @@
-package domain;
+package project2;
 
 import java.util.Calendar;
 
