@@ -1,4 +1,4 @@
-package domain;
+package project2;
 
 /**
  Roster class is a student array based class.

@@ -1,0 +1,7 @@
+[user]
+	name = Joshua McArdle
+	email = jam1025@rutgers.edu
+[init]
+	default = branch
+[url "https://"]
+	insteadOf = git://

@@ -1,4 +1,4 @@
-package domain;
+package project2;
 /**
  Standing enum will hold the standing names and their value
  @author Yovanny Moscoso
