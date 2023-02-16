@@ -218,7 +218,7 @@ public abstract class Student implements Comparable<Student>{
      */
     public abstract boolean isResident();
 
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         Profile p1 = new Profile("Lopez", "Juan", new Date("10/12/1992"));
         Profile p2 = new Profile("Serna", "Maria", new Date("15/02/1993"));
         Profile p3 = new Profile("Tylor", "Lucas", new Date("12/13/1993"));
@@ -234,13 +234,13 @@ public abstract class Student implements Comparable<Student>{
 
         /** Test cases*/
 
-        System.out.println(student2.compareTo(student1));
+        /*System.out.println(student2.compareTo(student1));
         System.out.println(student2.compareTo(student3));
         System.out.println(student3.compareTo(student4));
         System.out.println(student5.compareTo(student4));
-        System.out.println(student6.compareTo(student5));
+        System.out.println(student6.compareTo(student5));*/
 
-        Student student7 = new Student(p6, null, 0);
+        //Student student7 = new Student(p6, null, 0);
 
         //System.out.println(student1);
         //System.out.println(student2);
@@ -248,5 +248,5 @@ public abstract class Student implements Comparable<Student>{
         // System.out.println(student);
        // System.out.println(one.compareTo(two));
 
-    }
+    //}
 }
