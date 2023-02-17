@@ -18,8 +18,10 @@ public class Enrollment {
 
         public void remove(EnrollStudent enrollStudent){}
 
-        public boolean contains(EnrollStudent enrollStudent){}
+        public boolean contains(EnrollStudent enrollStudent){
+
+                return true;
+        }
 
         public void print() {} //print the array as is without sorting
-    }
 }

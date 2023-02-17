@@ -1,4 +1,4 @@
-package domain;
+package project2;
 
 /**
  * Driver class to run Project 1, creates an instance of RosterManager and calls the run() method.

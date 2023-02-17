@@ -63,7 +63,7 @@ public class TuitionManager {
                 break;
 
             case "Q":
-                System.out.println("Roster Manager terminated.");
+                System.out.println("Tuition Manager terminated.");
                 break;
 
             default:
@@ -103,7 +103,7 @@ public class TuitionManager {
             return false;
         }
 
-        this.student = new Student(stProfile, stMajor, Integer.parseInt(this.credits));
+        //this.student = new Student(stProfile, stMajor, Integer.parseInt(this.credits));
 
         if(roster.contains(student)) {
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " already in the roster.");
@@ -125,7 +125,7 @@ public class TuitionManager {
 
         this.date = new Date(this.dob);
         Profile stProfile = new Profile(this.lname, this.fname, date);
-        this.student = new Student(stProfile, null, Integer.parseInt(this.credits));
+        //this.student = new Student(stProfile, null, Integer.parseInt(this.credits));
 
         if(roster.remove(student)) {
             numStudents--;
@@ -220,7 +220,7 @@ public class TuitionManager {
 
         this.date = new Date(this.dob);
         Profile stProfile = new Profile(this.lname, this.fname, this.date);
-        this.student = new Student(stProfile, null, Integer.parseInt(this.credits));
+        //this.student = new Student(stProfile, null, Integer.parseInt(this.credits));
 
         if(this.numStudents == 0) {
 
@@ -348,7 +348,7 @@ public class TuitionManager {
         Scanner sc = new Scanner(System.in);
         sc.useDelimiter("[\\r\\n]+");
         this.roster = new Roster();
-        System.out.println("Roster Manager running...");
+        System.out.println("Tuition Manager running...");
 
         while(sc.hasNextLine()) {
 

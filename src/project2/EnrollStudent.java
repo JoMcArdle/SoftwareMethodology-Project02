@@ -21,7 +21,7 @@ public class EnrollStudent {
     @Override
     public boolean equals(Object obj) {
 
-        //enter code here
+        return true;
     }
 
     /**
@@ -31,6 +31,6 @@ public class EnrollStudent {
     @Override
     public String toString() {
 
-        //enter code here
+        return "";
     }
 }
