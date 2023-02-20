@@ -10,6 +10,8 @@ public abstract class Student implements Comparable<Student>{
     private Major major; //Major is an enum type
     private int creditCompleted;
     private Standing standing;
+    private static final int MIN_CREDITS = 3; //new constant for Resident, Nonresident classes
+    private static final int MAX_CREDITS = 24; //new constant for Resident, Nonresident classes
 
     /**
      * Empty constructor
@@ -148,7 +150,7 @@ public abstract class Student implements Comparable<Student>{
      * @param s
      * @return it will return s string representation of the status of a student
      */
-    private String returnStanding(Student s){
+    public String returnStanding(Student s){
         if(s.getCreditCompleted() >= 0 && s.getCreditCompleted() < standing.FRESHMAN.getNumberOfCredits()){
             return standing.FRESHMAN.name().substring(0, 1).toUpperCase()
                     + standing.FRESHMAN.name().substring(1).toLowerCase();
@@ -201,7 +203,12 @@ public abstract class Student implements Comparable<Student>{
      */
     public boolean isValid(int creditEnrolled) {
 
-        //code here
+        int credits = creditEnrolled;
+        if(credits < MIN_CREDITS || credits > MAX_CREDITS) {
+
+            return false;
+        }
+
         return true;
     }
 

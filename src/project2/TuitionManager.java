@@ -1,5 +1,6 @@
 package project2;
 import java.util.Scanner;
+import java.io.File;
 
 /**
  * User interface class that handles line commands entered on the console and displays the results on the console.
