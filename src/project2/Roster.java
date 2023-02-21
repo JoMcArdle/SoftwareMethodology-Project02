@@ -31,8 +31,6 @@ public class Roster {
             if (roster[location].equals(student)) {
                 result = location;
                 return result;
-            }else{
-                location++;
             }
         }
         return result;
@@ -57,14 +55,16 @@ public class Roster {
     public boolean add(Student student){
         if(numStudents == roster.length) {
             grow();
+            roster[numStudents] = student;
+            numStudents++;
+            return true;
+        }else{
+            return false;
         }
-        roster[numStudents] = student;
-        numStudents++;
-        return true;
 
     } //add student to end of array
     /**
-     * This method will attempt to find an student in the roster and remove it.
+     * This method will attempt to find a student in the roster and remove it.
      * @param student
      * @return it returns true if the student was removed. If not it will return false.
      */
