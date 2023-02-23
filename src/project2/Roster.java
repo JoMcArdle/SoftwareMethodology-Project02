@@ -31,7 +31,9 @@ public class Roster {
             if (roster[location].equals(student)) {
                 result = location;
                 return result;
-            }
+            }else{ //re-added
+                location++; //re-added
+            } //re-added
         }
         return result;
     } //search the given student in roster
@@ -55,12 +57,13 @@ public class Roster {
     public boolean add(Student student){
         if(numStudents == roster.length) {
             grow();
+        }//re-added
             roster[numStudents] = student;
             numStudents++;
             return true;
-        }else{
+        /*}else{
             return false;
-        }
+        }*/
 
     } //add student to end of array
     /**

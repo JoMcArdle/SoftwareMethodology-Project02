@@ -33,6 +33,15 @@ public class Resident extends Student{
 
     }
 
+    /**
+     * Constructor that creates new Resident student with only their profile.
+     * @param profile, last name, first name and DOB of resident student.
+     */
+    public Resident(Profile profile) {
+
+        super(profile);
+    }
+
 
     /**
      * Getter method that returns the scholarship amount.

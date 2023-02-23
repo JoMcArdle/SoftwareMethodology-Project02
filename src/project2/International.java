@@ -96,7 +96,7 @@ public class International extends NonResident{
         //return getProfile() + " " + getMajor().toString() + " credits completed: " + getCreditCompleted()
         // + " (" + returnStanding(this) + ")" + " (" + "non-resident" + ")";
 
-        return super.toString() + " (" + "international" + ")";
+        return super.toString() + " (" + "international" + ")" + isStudyAbroad; //added variable
     }
 
     public static void main(String[] args) {
