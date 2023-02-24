@@ -27,6 +27,15 @@ public class EnrollStudent{
     }
 
     /**
+     * Constructor than initializes an EnrollStudent with profile only
+     * @param profile
+     */
+    public EnrollStudent(Profile profile) {
+
+        this.profile = profile;
+    }
+
+    /**
      * Getter method that returns the number of credits a student has enrolled.
      * @return this.creditsEnrolled, the number of credits enrolled.
      */
