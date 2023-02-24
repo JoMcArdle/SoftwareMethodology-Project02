@@ -15,11 +15,15 @@ public class TuitionManager {
     private String dob;
     private String major;
     private String credits;
+    private String creditsEnrolled;
     private String state;
     private boolean studyAbroad;
     private int numStudents;
+    private int numEnrolledStudents;
     private Roster roster;
     private Student student;
+    private EnrollStudent enrollStudent;
+    private Enrollment enrollList;
     private Major stMajor;
     private Date date;
     private String file;
@@ -140,6 +144,49 @@ public class TuitionManager {
      */
     private boolean enrollCommand() {
 
+        if(dateError() == false) {
+
+            return false;
+        }
+
+        Profile stProfile = new Profile(this.lname, this.fname, date);
+
+        if(creditsEnrolledError() == false) {
+
+            return false;
+        }
+
+        this.enrollStudent = new EnrollStudent(stProfile,
+                Integer.parseInt(this.creditsEnrolled));
+
+        this.student = new Resident(stProfile, null, 0);
+        this.student = roster.returnStudent(this.student);
+
+        if(!(roster.contains(student))) {
+            System.out.println("Cannot enroll: " + " " + this.fname + " " + this.lname + " " +
+                    this.dob + " is not in the roster.");
+            return false;
+        }
+        else if(student.isValid(Integer.parseInt(creditsEnrolled)) == false) {
+            System.out.println(creditsEnrolled + ": invalid credit hours.");
+            return false;
+        }
+        else if(enrollList.contains(enrollStudent)) {
+            enrollStudent.setCreditsEnrolled(Integer.parseInt(this.creditsEnrolled));
+            enrollList.updateCreditsEnrolled(enrollStudent);
+            System.out.println(this.fname + " " + this.lname + " " + this.dob + " "
+                    + " enrolled " + Integer.parseInt(this.creditsEnrolled)
+                    + " credits.");
+            return true;
+        }
+        else {
+
+            enrollList.add(enrollStudent);
+            numEnrolledStudents++;
+            System.out.println(this.fname + " " + this.lname + " " + this.dob + " "
+                            + " enrolled " + Integer.parseInt(this.creditsEnrolled)
+                            + " credits.");
+        }
         return true;
     }
 
@@ -167,6 +214,18 @@ public class TuitionManager {
      */
     private boolean printEnrollCommand() {
 
+        if(numEnrolledStudents == 0) {
+
+            System.out.println("Enrollment is empty!");
+            return false;
+        }
+        else {
+
+            System.out.println("** Enrollment **");
+            enrollList.print();
+            System.out.println("* end of enrollment *");
+
+        }
         return true;
     }
 
@@ -445,6 +504,29 @@ public class TuitionManager {
     }
 
     /**
+     * Helper method for enrollCommand(), checks if the credits enrolled are valid.
+     * @return false if credits enrolled are null or not an integer and true otherwise.
+     */
+    private boolean creditsEnrolledError() {
+
+        if(this.creditsEnrolled == null) {
+
+            System.out.println("Missing data in command line.");
+            return false;
+        }
+
+        try {
+            Integer.parseInt(this.creditsEnrolled);
+        }
+        catch (NumberFormatException e) {
+            System.out.println("Credits enrolled is not an integer.");
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Helper method for addCommand(), checks if a Tri-state student's state is valid.
      * @return false if state is null or an invalid state.
      */
@@ -490,6 +572,33 @@ public class TuitionManager {
     }
 
     /**
+     * Helper method for convertToTokens() method, sets the necessary tokens to the instance
+     * variables involved with enrolling a student.
+     */
+    private void enrollmentTokens() {
+
+        if (arrOfTokens.length > 1) {
+            this.fname = arrOfTokens[1];
+        }
+        if (arrOfTokens.length > 2) {
+            this.lname = arrOfTokens[2];
+        }
+        if (arrOfTokens.length > 3) {
+            this.dob = arrOfTokens[3];
+        }
+        else {
+            this.dob = null;
+        }
+        if (arrOfTokens.length > 4) {
+            this.creditsEnrolled = arrOfTokens[4];
+        }
+        else {
+            this.creditsEnrolled = null;
+        }
+    }
+
+
+    /**
      * Helper method for run() command, uses .split() method to grab the operation code and data tokens necessary to
      * manage the student roster.
      */
@@ -503,6 +612,9 @@ public class TuitionManager {
             }
             else if (this.opCode.equals("LS")) {
                 this.file = arrOfTokens[1];
+            }
+            else if (this.opCode.equals("E")) {
+                enrollmentTokens();
             }
             else {
                 if (arrOfTokens.length > 1) {
@@ -547,6 +659,7 @@ public class TuitionManager {
         Scanner sc = new Scanner(System.in);
         sc.useDelimiter("[\\r\\n]+");
         this.roster = new Roster();
+        this.enrollList = new Enrollment();
         System.out.println("Tuition Manager running...");
 
         while(sc.hasNextLine()) {

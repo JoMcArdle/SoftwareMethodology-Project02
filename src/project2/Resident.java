@@ -12,8 +12,7 @@ public class Resident extends Student{
     public static final int UNIVERSITY_FEE = 3268;
     public static final double UNIVERSITY_FEE_PART_TIME_RATE = 2614.4;
 
-
-
+    
     /**
      * Empty constructor
      */

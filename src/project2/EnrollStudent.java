@@ -27,6 +27,25 @@ public class EnrollStudent{
     }
 
     /**
+     * Getter method that returns the number of credits a student has enrolled.
+     * @return this.creditsEnrolled, the number of credits enrolled.
+     */
+    public int getCreditsEnrolled() {
+
+        return this.creditsEnrolled;
+    }
+
+    /**
+     * Setter method that changes an enrolled student's credits enrolled to a specified value.
+     * @param creditsEnrolled, the number of credits enrolled that are to be set to the instance
+     *                         variable.
+     */
+    public void setCreditsEnrolled(int creditsEnrolled) {
+
+        this.creditsEnrolled = creditsEnrolled;
+    }
+
+    /**
      *
      * Override method
      * The equals method will compare two enrollments to determine if they are equals based on their profile

@@ -37,10 +37,10 @@ public class NonResident extends Student{
      * @return false if credits are less than the minimum amount of credits or greater than the maximum amount of
      * credits and true otherwise.
      */
+
     public boolean isValid(int creditEnrolled) {
 
         return super.isValid(creditEnrolled);
-
     }
 
     /**

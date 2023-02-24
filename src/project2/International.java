@@ -37,7 +37,6 @@ public class International extends NonResident{
         if(isStudyAbroad == true) {
 
             if(creditEnrolled > MIN_CREDITS_FULL_TIME) {
-
                 return false;
             }
         }
@@ -45,7 +44,9 @@ public class International extends NonResident{
 
             return false;
         }
+        else {
 
+        }
         return super.isValid(creditEnrolled);
     }
 

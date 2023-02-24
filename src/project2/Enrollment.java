@@ -42,7 +42,7 @@ public class Enrollment {
                 location = 0;
                 int result = NOT_FOUND;
                 for (int i = location; i< numEnrollments; i++) {
-                        if (roster[location].equals(enrollStudent)) {
+                        if (enrollStudents[location].equals(enrollStudent)) {
                                 result = location;
                                 return result;
                         }
@@ -112,6 +112,16 @@ public class Enrollment {
                         System.out.println(e);
                 }
         } //print the array as is without sorting
+
+        public boolean updateCreditsEnrolled(EnrollStudent s){
+                if (find(s) >= 0){
+                        enrollStudents[find(s)].setCreditsEnrolled(s.getCreditsEnrolled());
+                        return true;
+                }else{
+                        return false;
+                }
+
+        }
 
         public static void main(String[] args) {
 
