@@ -26,10 +26,10 @@ public class Resident extends Student{
      * @param major, the major of the resident student.
      * @param creditCompleted, the number of credits a Resident student has completed.
      */
-    public Resident(Profile profile, Major major, int creditCompleted) {
+    public Resident(Profile profile, Major major, int creditCompleted, int scholarship) {
 
         super(profile, major, creditCompleted);
-
+        this.scholarship = scholarship;
     }
 
     /**

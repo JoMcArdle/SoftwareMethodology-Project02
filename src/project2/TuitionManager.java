@@ -17,6 +17,7 @@ public class TuitionManager {
     private String credits;
     private String creditsEnrolled;
     private String state;
+    private String scholarship;
     private boolean studyAbroad;
     private int numStudents;
     private int numEnrolledStudents;
@@ -29,6 +30,9 @@ public class TuitionManager {
     private String file;
     private String[] arrOfTokens;
     private static final int MIN_AGE = 16;
+    private static final int MIN_CREDITS_FULL_TIME = 12;
+    private static final int MAX_SCHOLARSHIP_AMOUNT = 10000;
+    private static final int MIN_SCHOLARSHIP_AMOUNT = 1;
 
     /**
      * Empty constructor, used by the driver class RunProject1.
@@ -159,7 +163,7 @@ public class TuitionManager {
         this.enrollStudent = new EnrollStudent(stProfile,
                 Integer.parseInt(this.creditsEnrolled));
 
-        this.student = new Resident(stProfile, null, 0);
+        this.student = new Resident(stProfile, null, 0, 0);
         this.student = roster.returnStudent(this.student);
 
         if(!(roster.contains(student))) {
@@ -196,6 +200,20 @@ public class TuitionManager {
      */
     private boolean dropCommand() {
 
+        this.date = new Date(this.dob);
+        Profile stProfile = new Profile(this.lname, this.fname, date);
+        this.enrollStudent = new EnrollStudent(stProfile);
+
+        if(enrollList.remove(enrollStudent)) {
+            numEnrolledStudents--;
+            System.out.println(this.fname + " " + this.lname + " " + this.dob
+                    + " dropped.");
+        }
+        else {
+            System.out.println(this.fname + " " + this.lname + " " + this.dob
+                    + " is not enrolled.");
+            return false;
+        }
         return true;
     }
 
@@ -205,6 +223,44 @@ public class TuitionManager {
      */
     private boolean scholarshipCommand() {
 
+        this.date = new Date(this.dob);
+        Profile stProfile = new Profile(this.lname, this.fname, date);
+        this.student = new Resident(stProfile);
+        this.student = roster.returnStudent(this.student);
+        this.enrollStudent = new EnrollStudent(stProfile);
+        this.enrollStudent = enrollList.returnEnrollStudent(this.enrollStudent);
+
+        if(!(roster.contains(student))) {
+
+            System.out.println(this.fname + " " + this.lname + " " + this.dob
+                    + " is not in the roster.");
+            return false;
+        }
+        else if(student.isResident() == false) {
+
+            System.out.println(this.fname + " " + this.lname + " " + this.dob
+                    + " is not eligible for the scholarship.");
+            return false;
+        }
+
+        if(student.isResident()) {
+
+            if(enrollStudent.getCreditsEnrolled() < MIN_CREDITS_FULL_TIME) {
+
+                System.out.println(this.fname + " " + this.lname + " " + this.dob
+                        + " part time student is not eligible for the scholarship.");
+                return false;
+            }
+            else if(scholarshipError() == false) {
+
+                return false;
+            }
+            else {
+                student.setScholarship(this.scholarship);
+                System.out.println(this.fname + " " + this.lname + " " + this.dob
+                        + ": scholarship amount updated.");
+            }
+        }
         return true;
     }
 
@@ -546,6 +602,31 @@ public class TuitionManager {
         return true;
     }
 
+    private boolean scholarshipError() {
+
+        if(this.scholarship == null) {
+
+            System.out.println("Missing data from command line.");
+            return false;
+        }
+
+        try {
+            Integer.parseInt(this.scholarship);
+        }
+        catch (NumberFormatException e) {
+            System.out.println("Amount is not an integer.");
+            return false;
+        }
+
+        if(Integer.parseInt(this.scholarship) < MIN_SCHOLARSHIP_AMOUNT ||
+                Integer.parseInt(this.scholarship) > MAX_SCHOLARSHIP_AMOUNT ) {
+
+            System.out.println(this.scholarship + ": invalid amount.");
+            return false;
+        }
+        return true;
+    }
+
     /**
      * Helper method for addCommand(), checks to see the type of student to be added and creates an instance of that student.
      * @param profile, the profile of the student to be added.
@@ -554,7 +635,7 @@ public class TuitionManager {
 
         if(opCode.equals("AR") || opCode.equals("R")) {
 
-            this.student = new Resident(profile, stMajor, Integer.parseInt(this.credits));
+            this.student = new Resident(profile, stMajor, Integer.parseInt(this.credits), 0);
         }
         else if(opCode.equals("AN") || opCode.equals("N")) {
 
@@ -597,6 +678,32 @@ public class TuitionManager {
         }
     }
 
+    /**
+     * Helper method for convertToTokens() method, sets the necessary tokens to the instance
+     * variables involved with awarding a scholarship to a resident student.
+     */
+    private void scholarshipTokens() {
+
+        if (arrOfTokens.length > 1) {
+            this.fname = arrOfTokens[1];
+        }
+        if (arrOfTokens.length > 2) {
+            this.lname = arrOfTokens[2];
+        }
+        if (arrOfTokens.length > 3) {
+            this.dob = arrOfTokens[3];
+        }
+        else {
+            this.dob = null;
+        }
+        if (arrOfTokens.length > 4) {
+            this.scholarship = arrOfTokens[4];
+        }
+        else {
+            this.scholarship = null;
+        }
+
+    }
 
     /**
      * Helper method for run() command, uses .split() method to grab the operation code and data tokens necessary to
@@ -615,6 +722,9 @@ public class TuitionManager {
             }
             else if (this.opCode.equals("E")) {
                 enrollmentTokens();
+            }
+            else if(this.opCode.equals("S")) {
+                scholarshipTokens();
             }
             else {
                 if (arrOfTokens.length > 1) {
