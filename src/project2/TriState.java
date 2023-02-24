@@ -47,34 +47,41 @@ public class TriState extends NonResident{
     @Override
     public double tuitionDue(int creditsEnrolled) {
 
-        double tuition;
+        double tuition = -1;
 
-        if(creditsEnrolled >= MIN_CREDITS && creditsEnrolled < MIN_CREDITS_FULL_TIME) {
+        if(creditsEnrolled >= MIN_CREDITS && creditsEnrolled < MIN_CREDITS_FULL_TIME) { //Part time
 
             tuition = (CREDIT_HOUR_RATE * creditsEnrolled) + (UNIVERSITY_FEE_PART_TIME_RATE);
         }
-        else if(creditsEnrolled > CREDITS_FULL_TIME) {
 
-            tuition = (TUITION_FEE) + (UNIVERSITY_FEE) + (CREDIT_HOUR_RATE * (creditsEnrolled - CREDITS_FULL_TIME));
-        }
-        else {
+        else if (creditsEnrolled >= MIN_CREDITS_FULL_TIME && creditsEnrolled <= CREDITS_FULL_TIME){ // Full time
 
             tuition = TUITION_FEE + UNIVERSITY_FEE;
-        }
-
-        if(creditsEnrolled >= MIN_CREDITS_FULL_TIME) {
 
             if(state.equalsIgnoreCase("NY")) {
 
                 tuition = tuition - NY_TUITION_DISCOUNT;
             }
-            else if(state.equalsIgnoreCase("CT")) {
+            else if(state.equalsIgnoreCase("CT")) {// Discount for CT Students
 
                 tuition = tuition - CT_TUITION_DISCOUNT;
 
             }
         }
+        else if(creditsEnrolled > CREDITS_FULL_TIME && creditsEnrolled <= MAX_CREDITS) { //Beyond full time
 
+            tuition = (TUITION_FEE) + (UNIVERSITY_FEE) + (CREDIT_HOUR_RATE * (creditsEnrolled - CREDITS_FULL_TIME));
+
+            if(state.equalsIgnoreCase("NY")) {
+
+                tuition = tuition - NY_TUITION_DISCOUNT;
+            }
+            else if(state.equalsIgnoreCase("CT")) {// Discount for CT Students
+
+                tuition = tuition - CT_TUITION_DISCOUNT;
+
+            }
+        }
         return tuition;
     }
 
@@ -104,11 +111,11 @@ public class TriState extends NonResident{
 
         Profile profile = new Profile("Lopez", "Juan", new Date("10/12/1992"));
 
-        TriState triState = new TriState(profile, Major.BAIT, 0, "ny");
+        TriState triState = new TriState(profile, Major.BAIT, 0, "NY");
 
         System.out.println(triState);
 
-        System.out.println(triState.tuitionDue(12));
+        System.out.println(triState.tuitionDue(9));
 
     }
 }

@@ -13,7 +13,6 @@ public class Resident extends Student{
     public static final double UNIVERSITY_FEE_PART_TIME_RATE = 2614.4;
 
 
-
     /**
      * Empty constructor
      */
@@ -52,16 +51,6 @@ public class Resident extends Student{
         this.scholarship = scholarship;
     }
 
-    /**
-     * Checks if the number of credits are valid.
-     * @param creditEnrolled credits that are to be checked whether they are valid or not.
-     * @return false if credits are less than the minimum amount of credits or greater than the maximum amount of
-     * credits and true otherwise.
-     */
-    public boolean isValid(int creditEnrolled) {
-
-        return super.isValid(creditEnrolled);
-    }
 
     /**
      * Calculates the amount of tuition due for a resident student, also factors in scholarship if applicable.
@@ -71,25 +60,33 @@ public class Resident extends Student{
     @Override
     public double tuitionDue(int creditsEnrolled) {
 
-        double tuition;
+        double tuition = -1;
 
-        if(creditsEnrolled >= MIN_CREDITS && creditsEnrolled < MIN_CREDITS_FULL_TIME) {
+        if(creditsEnrolled >= MIN_CREDITS && creditsEnrolled < MIN_CREDITS_FULL_TIME) { // Part time
 
             tuition = (CREDIT_HOUR_RATE * creditsEnrolled) + (UNIVERSITY_FEE_PART_TIME_RATE);
-        }
-        else if(creditsEnrolled > CREDITS_FULL_TIME) {
 
-            tuition = (TUITION_FEE) + (UNIVERSITY_FEE) + (CREDIT_HOUR_RATE * (creditsEnrolled - CREDITS_FULL_TIME));
         }
-        else {
+        else if(creditsEnrolled >= MIN_CREDITS_FULL_TIME && creditsEnrolled <= CREDITS_FULL_TIME){ // Full time
 
             tuition = TUITION_FEE + UNIVERSITY_FEE;
+
+            if(scholarship >0) {
+
+                tuition = tuition - scholarship;
+            }
+
+        }
+        else if(creditsEnrolled > CREDITS_FULL_TIME && creditsEnrolled <= MAX_CREDITS) { //Beyond full time
+
+            tuition = (TUITION_FEE) + (UNIVERSITY_FEE) + (CREDIT_HOUR_RATE * (creditsEnrolled - CREDITS_FULL_TIME));
+
+            if(scholarship > 0) {
+
+                tuition = tuition - scholarship;
+            }
         }
 
-        if(scholarship != 0 && creditsEnrolled >= MIN_CREDITS_FULL_TIME) {
-
-            tuition = tuition - scholarship;
-        }
         return tuition;
     }
 
@@ -124,8 +121,7 @@ public class Resident extends Student{
 
         System.out.println(resident);
 
-        System.out.println(resident.tuitionDue(18));
-
+        System.out.println(resident.tuitionDue(20));
 
     }
 

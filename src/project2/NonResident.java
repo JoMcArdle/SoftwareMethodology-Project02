@@ -51,19 +51,20 @@ public class NonResident extends Student{
     @Override
     public double tuitionDue(int creditsEnrolled) {
 
-        double tuition;
+        double tuition = -1;
 
-        if(creditsEnrolled >= MIN_CREDITS && creditsEnrolled < MIN_CREDITS_FULL_TIME) {
+        if(creditsEnrolled >= MIN_CREDITS && creditsEnrolled < MIN_CREDITS_FULL_TIME) { // Part time
 
             tuition = (CREDIT_HOUR_RATE * creditsEnrolled) + (UNIVERSITY_FEE_PART_TIME_RATE);
         }
-        else if(creditsEnrolled > CREDITS_FULL_TIME) {
-
-            tuition = (TUITION_FEE) + (UNIVERSITY_FEE) + (CREDIT_HOUR_RATE * (creditsEnrolled - CREDITS_FULL_TIME));
-        }
-        else {
+        else if(creditsEnrolled >= MIN_CREDITS_FULL_TIME && creditsEnrolled <= CREDITS_FULL_TIME) { // full time
 
             tuition = TUITION_FEE + UNIVERSITY_FEE;
+
+        }
+        else if(creditsEnrolled > CREDITS_FULL_TIME && creditsEnrolled <= MAX_CREDITS){
+
+            tuition = (TUITION_FEE) + (UNIVERSITY_FEE) + (CREDIT_HOUR_RATE * (creditsEnrolled - CREDITS_FULL_TIME));
         }
 
         return tuition;

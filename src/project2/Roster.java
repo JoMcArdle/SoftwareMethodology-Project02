@@ -6,7 +6,7 @@ package project2;
  */
 public class Roster {
     private Student[] roster;
-    private int size = 100;
+    private int size = 5;
     public int numStudents = 0;
     private int location;
     private static final int INCREASE_CAPACITY = 4;
@@ -24,10 +24,10 @@ public class Roster {
      * @param student
      * @return If the student is in the roster, the method will return the index where the student is located. If not, it will return -1.
      */
-    public int find(Student student) {
+    private int find(Student student) {
         location = 0;
         int result = NOT_FOUND;
-        for (int i = location; i< numStudents; i++) {
+        for (int i = location; i < numStudents; i++) {
             if (roster[location].equals(student)) {
                 result = location;
                 return result;
@@ -53,15 +53,16 @@ public class Roster {
      * @return it returns true if we add an student
      */
     public boolean add(Student student){
-        if(numStudents == roster.length) {
+        if(numStudents == roster.length-1) {
             grow();
+        }else if(contains(student)){
+            return false;
+        }else{
             roster[numStudents] = student;
             numStudents++;
             return true;
-        }else{
-            return false;
         }
-
+        return false;
     } //add student to end of array
     /**
      * This method will attempt to find a student in the roster and remove it.
@@ -69,11 +70,10 @@ public class Roster {
      * @return it returns true if the student was removed. If not it will return false.
      */
     public boolean remove(Student student){
-        if(find(student) >= 0){
+        if(contains(student)){
             for (int i = location; i <= numStudents -2; i++){
                 roster[i] = roster[i+1];
             }
-            roster[numStudents-1] = null;
             numStudents--;
             return true;
         }else {

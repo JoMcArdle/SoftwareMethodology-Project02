@@ -5,6 +5,7 @@ public class International extends NonResident{
     private boolean isStudyAbroad; //only instance variable, do not add more.
     private static final int HEALTH_INSURANCE_FEE = 2650;
 
+
     /**
      * Empty constructor.
      */
@@ -20,7 +21,6 @@ public class International extends NonResident{
      * @param isStudyAbroad, whether student is in the study abroad program or not.
      */
     public International(Profile profile, Major major, int creditCompleted, boolean isStudyAbroad) {
-
         super(profile, major, creditCompleted);
         this.isStudyAbroad = isStudyAbroad;
     }
@@ -56,25 +56,27 @@ public class International extends NonResident{
      */
     @Override
     public double tuitionDue(int creditsEnrolled) {
+        //International students must enroll at least 12 credits, except for the international students who are participating in the study abroad
+        //program. The maximum number of credits enrolled for the international students in the study abroad program is 12.
 
-        double tuition;
+        double tuition = -1;;
 
-        if(isStudyAbroad) {
-
-            tuition = UNIVERSITY_FEE + HEALTH_INSURANCE_FEE;
+        if (this.isStudyAbroad) {
+            if (creditsEnrolled == MIN_CREDITS_FULL_TIME) { // Max credits for international students who participate in study abroad is 12.
+                tuition = UNIVERSITY_FEE + HEALTH_INSURANCE_FEE;
+            }else if(creditsEnrolled >= MIN_CREDITS && creditsEnrolled < MIN_CREDITS_FULL_TIME){// Part time
+                tuition = (UNIVERSITY_FEE_PART_TIME_RATE) + (creditsEnrolled* CREDIT_HOUR_RATE);
+            }
+        }else{
+            //International Students that are not in the study abroad must be at least Full time
+                if (creditsEnrolled >= MIN_CREDITS_FULL_TIME && creditsEnrolled <= CREDITS_FULL_TIME) { // Full time
+                    tuition = TUITION_FEE + UNIVERSITY_FEE + HEALTH_INSURANCE_FEE;
+                } else if (creditsEnrolled > CREDITS_FULL_TIME && creditsEnrolled <= MAX_CREDITS) {// Beyond full time
+                    tuition = TUITION_FEE + UNIVERSITY_FEE + HEALTH_INSURANCE_FEE + (creditsEnrolled - CREDITS_FULL_TIME) * CREDIT_HOUR_RATE;
+                }
+            }
             return tuition;
-        }
-        else if(creditsEnrolled >= MIN_CREDITS_FULL_TIME && creditsEnrolled <= CREDITS_FULL_TIME) {
 
-            tuition = TUITION_FEE + UNIVERSITY_FEE + HEALTH_INSURANCE_FEE;
-        }
-        else {
-
-            tuition = (TUITION_FEE) + (UNIVERSITY_FEE) + (HEALTH_INSURANCE_FEE) +
-                    (CREDIT_HOUR_RATE * (creditsEnrolled - CREDITS_FULL_TIME)); //credits enrolled > 16
-        }
-
-        return tuition;
     }
 
     /**
@@ -107,7 +109,7 @@ public class International extends NonResident{
 
         System.out.println(international);
 
-        System.out.println(international.tuitionDue(10));
+        System.out.println(international.tuitionDue(12));
 
 
     }

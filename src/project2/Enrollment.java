@@ -5,7 +5,6 @@ package project2;
  @author Yovanny Moscoso
  */
 public class Enrollment {
-        private Student[] roster;
         public int numEnrollments = 0;
         private int location;
         private static final int INCREASE_CAPACITY = 4;
@@ -42,7 +41,7 @@ public class Enrollment {
                 location = 0;
                 int result = NOT_FOUND;
                 for (int i = location; i< numEnrollments; i++) {
-                        if (roster[location].equals(enrollStudent)) {
+                        if (this.enrollStudents[location].equals(enrollStudent)) {
                                 result = location;
                                 return result;
                         }
@@ -58,15 +57,15 @@ public class Enrollment {
         public boolean add(EnrollStudent enrollStudent){
                 if(numEnrollments == enrollStudents.length){
                         grow();
-                }if(contains(enrollStudent)) {
+                }else if(contains(enrollStudent)){
                         enrollStudents[find(enrollStudent)] = enrollStudent;
-
+                        return false;
+                }else{
                         enrollStudents[numEnrollments] = enrollStudent;
                         numEnrollments++;
                         return true;
-                }else{
-                        return false;
                 }
+                return false;
 
         } //add to the end of array
         //move the last one in the array to replace the deleting index position
@@ -80,7 +79,7 @@ public class Enrollment {
         public boolean remove(EnrollStudent enrollStudent){
                 if(contains(enrollStudent)){
                         for(int i= find(enrollStudent); i < numEnrollments -2; i++) {
-                                enrollStudents[find(enrollStudent)] = enrollStudents[i+1];
+                                this.enrollStudents[find(enrollStudent)] = enrollStudents[i+1];
                         }
                         enrollStudents[numEnrollments-1] = null;
                         numEnrollments--;
