@@ -12,7 +12,6 @@ public class Resident extends Student{
     public static final int UNIVERSITY_FEE = 3268;
     public static final double UNIVERSITY_FEE_PART_TIME_RATE = 2614.4;
 
-
     /**
      * Empty constructor
      */
@@ -30,6 +29,15 @@ public class Resident extends Student{
 
         super(profile, major, creditCompleted);
 
+    }
+
+    /**
+     * Constructor that creates new Resident student with only their profile.
+     * @param profile, last name, first name and DOB of resident student.
+     */
+    public Resident(Profile profile) {
+
+        super(profile);
     }
 
 

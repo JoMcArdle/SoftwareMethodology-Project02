@@ -33,6 +33,15 @@ public abstract class Student implements Comparable<Student>{
     }
 
     /**
+     * Constructor that initializes only the profile of the student
+     * @param profile
+     */
+    public Student(Profile profile) {
+
+        this.profile = profile;
+    }
+
+    /**
      * getProfile will return the student profile
      * @return profile
      */

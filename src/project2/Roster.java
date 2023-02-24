@@ -31,7 +31,9 @@ public class Roster {
             if (roster[location].equals(student)) {
                 result = location;
                 return result;
-            }
+            }else{ //re-added
+                location++; //re-added
+            } //re-added
         }
         return result;
     } //search the given student in roster
@@ -55,6 +57,7 @@ public class Roster {
     public boolean add(Student student){
         if(numStudents == roster.length-1) {
             grow();
+
         }else if(contains(student)){
             return false;
         }else{
@@ -63,6 +66,7 @@ public class Roster {
             return true;
         }
         return false;
+
     } //add student to end of array
     /**
      * This method will attempt to find a student in the roster and remove it.
@@ -186,5 +190,19 @@ public class Roster {
             return false;
         }
 
+    }
+
+    /**
+     *
+     * @param s
+     * @return
+     */
+    public Student returnStudent (Student s) {
+
+        if(contains(s) == true) {
+
+            s = roster[find(s)];
+        }
+        return s;
     }
 }

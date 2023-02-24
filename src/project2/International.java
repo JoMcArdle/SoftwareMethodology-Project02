@@ -37,7 +37,6 @@ public class International extends NonResident{
         if(isStudyAbroad == true) {
 
             if(creditEnrolled > MIN_CREDITS_FULL_TIME) {
-
                 return false;
             }
         }
@@ -45,7 +44,9 @@ public class International extends NonResident{
 
             return false;
         }
+        else {
 
+        }
         return super.isValid(creditEnrolled);
     }
 
@@ -98,7 +99,7 @@ public class International extends NonResident{
         //return getProfile() + " " + getMajor().toString() + " credits completed: " + getCreditCompleted()
         // + " (" + returnStanding(this) + ")" + " (" + "non-resident" + ")";
 
-        return super.toString() + " (" + "international" + ")";
+        return super.toString() + " (" + "international" + ")" + isStudyAbroad; //added variable
     }
 
     public static void main(String[] args) {

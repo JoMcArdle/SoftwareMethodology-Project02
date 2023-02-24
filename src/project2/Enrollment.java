@@ -112,6 +112,16 @@ public class Enrollment {
                 }
         } //print the array as is without sorting
 
+        public boolean updateCreditsEnrolled(EnrollStudent s){
+                if (find(s) >= 0){
+                        enrollStudents[find(s)].setCreditsEnrolled(s.getCreditsEnrolled());
+                        return true;
+                }else{
+                        return false;
+                }
+
+        }
+
         public static void main(String[] args) {
 
                 Enrollment e = new Enrollment();

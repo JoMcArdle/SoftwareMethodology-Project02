@@ -1,4 +1,5 @@
 package project2;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.io.File;
 
@@ -14,11 +15,19 @@ public class TuitionManager {
     private String dob;
     private String major;
     private String credits;
+    private String creditsEnrolled;
+    private String state;
+    private boolean studyAbroad;
     private int numStudents;
+    private int numEnrolledStudents;
     private Roster roster;
     private Student student;
+    private EnrollStudent enrollStudent;
+    private Enrollment enrollList;
     private Major stMajor;
     private Date date;
+    private String file;
+    private String[] arrOfTokens;
     private static final int MIN_AGE = 16;
 
     /**
@@ -32,10 +41,42 @@ public class TuitionManager {
      * Takes in the operation code from a line command and uses a switch case to perform various operations.
      * Calls different helper methods based on the operation code.
      */
-    private void operations() {
+    private void operations() throws FileNotFoundException {
 
         switch(opCode) {
-            case "A":
+
+            case "LS":
+                loadStudentCommand();
+                break;
+
+            case "E":
+                enrollCommand();
+                break;
+
+            case "D":
+                dropCommand();
+                break;
+
+            case "S":
+                scholarshipCommand();
+                break;
+
+            case "PE":
+                printEnrollCommand();
+                break;
+
+            case "PT":
+                printTuitionCommand();
+                break;
+
+            case "SE":
+                semesterEndCommand();
+                break;
+
+            case "AR":
+            case "AN":
+            case "AT":
+            case "AI":
                 addCommand();
                 break;
 
@@ -75,13 +116,144 @@ public class TuitionManager {
     }
 
     /**
+     * Helper method for operations(), loads the student roster from an external file.
+     * @throws FileNotFoundException
+     */
+    private void loadStudentCommand() throws FileNotFoundException {
+
+        Scanner studentList = new Scanner(new File(this.file));
+
+        while(studentList.hasNextLine()) {
+
+            String command = studentList.nextLine();
+            convertToTokens(command);
+            this.date = new Date(this.dob);
+            Profile stProfile = new Profile(this.lname, this.fname, date);
+            stMajor = Major.valueOf(this.major.toUpperCase());
+            createStudentType(stProfile);
+            roster.add(student);
+            numStudents++;
+
+        }
+        System.out.println("Students loaded to the roster.");
+    }
+
+    /**
+     * Helper method for operations(), enrolls a student with a number of credits and adds them to the enrollment list.
+     * @return
+     */
+    private boolean enrollCommand() {
+
+        if(dateError() == false) {
+
+            return false;
+        }
+
+        Profile stProfile = new Profile(this.lname, this.fname, date);
+
+        if(creditsEnrolledError() == false) {
+
+            return false;
+        }
+
+        this.enrollStudent = new EnrollStudent(stProfile,
+                Integer.parseInt(this.creditsEnrolled));
+
+        this.student = new Resident(stProfile, null, 0);
+        this.student = roster.returnStudent(this.student);
+
+        if(!(roster.contains(student))) {
+            System.out.println("Cannot enroll: " + " " + this.fname + " " + this.lname + " " +
+                    this.dob + " is not in the roster.");
+            return false;
+        }
+        else if(student.isValid(Integer.parseInt(creditsEnrolled)) == false) {
+            System.out.println(creditsEnrolled + ": invalid credit hours.");
+            return false;
+        }
+        else if(enrollList.contains(enrollStudent)) {
+            enrollStudent.setCreditsEnrolled(Integer.parseInt(this.creditsEnrolled));
+            enrollList.updateCreditsEnrolled(enrollStudent);
+            System.out.println(this.fname + " " + this.lname + " " + this.dob + " "
+                    + " enrolled " + Integer.parseInt(this.creditsEnrolled)
+                    + " credits.");
+            return true;
+        }
+        else {
+
+            enrollList.add(enrollStudent);
+            numEnrolledStudents++;
+            System.out.println(this.fname + " " + this.lname + " " + this.dob + " "
+                            + " enrolled " + Integer.parseInt(this.creditsEnrolled)
+                            + " credits.");
+        }
+        return true;
+    }
+
+    /**
+     * Helper method for operations(), drops a student from the enrollment list.
+     * @return
+     */
+    private boolean dropCommand() {
+
+        return true;
+    }
+
+    /**
+     * Helper method for operations(), awards a scholarship to a resident student.
+     * @return
+     */
+    private boolean scholarshipCommand() {
+
+        return true;
+    }
+
+    /**
+     * Helper method for operations(), prints out the current enrollment list, based on their order in the array.
+     * @return
+     */
+    private boolean printEnrollCommand() {
+
+        if(numEnrolledStudents == 0) {
+
+            System.out.println("Enrollment is empty!");
+            return false;
+        }
+        else {
+
+            System.out.println("** Enrollment **");
+            enrollList.print();
+            System.out.println("* end of enrollment *");
+
+        }
+        return true;
+    }
+
+    /**
+     * Helper method for operations(), prints out the tuition due based on credits enrolled, with the order in the enrollment array.
+     * @return
+     */
+    private boolean printTuitionCommand() {
+
+        return true;
+    }
+
+    /**
+     * Helper method for operations(), adds the enrolled credits to the credit completed in the roster and prints out the students who
+     * have already completed 120 credits or more.
+     * @return
+     */
+    private boolean semesterEndCommand() {
+
+        return true;
+    }
+
+    /**
      * Helper method for operations(), adds a student to the roster.
      * @return false if date of birth is invalid, major doesn't exist, credits are invalid, or if student exists in
      * the roster already and true otherwise.
      */
     private boolean addCommand() {
-
-        this.date = new Date(this.dob);
 
         if(dateError() == false) {
 
@@ -104,7 +276,12 @@ public class TuitionManager {
             return false;
         }
 
-        //this.student = new Student(stProfile, stMajor, Integer.parseInt(this.credits));
+        createStudentType(stProfile);
+
+        if(opCode.equals("AT") && stateError() == false) {
+
+            return false;
+        }
 
         if(roster.contains(student)) {
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " already in the roster.");
@@ -126,7 +303,7 @@ public class TuitionManager {
 
         this.date = new Date(this.dob);
         Profile stProfile = new Profile(this.lname, this.fname, date);
-        //this.student = new Student(stProfile, null, Integer.parseInt(this.credits));
+        this.student = new Resident(stProfile);
 
         if(roster.remove(student)) {
             numStudents--;
@@ -221,7 +398,7 @@ public class TuitionManager {
 
         this.date = new Date(this.dob);
         Profile stProfile = new Profile(this.lname, this.fname, this.date);
-        //this.student = new Student(stProfile, null, Integer.parseInt(this.credits));
+        this.student = new Resident(stProfile);
 
         if(this.numStudents == 0) {
 
@@ -249,10 +426,17 @@ public class TuitionManager {
     /**
      * Helper method for addCommand(), calls the isValid() method from Date class and prints whether a student is
      * younger than 16 years old or if the DOB is invalid.
-     * @return false if student is younger than 16 years old or if DOB is invalid and true otherwise.
+     * @return false if dob is null or student is younger than 16 years old or if DOB is invalid and true otherwise.
      */
 
     private boolean dateError() {
+
+        if(this.dob == null) {
+            System.out.println("Missing data in command line.");
+            return false;
+        }
+
+        this.date = new Date(this.dob);
 
         Date today = new Date();
 
@@ -276,6 +460,11 @@ public class TuitionManager {
      */
     private boolean majorError(){
 
+        if(major == null) {
+            System.out.println("Missing data in command line.");
+            return false;
+        }
+
         if(!(major.equalsIgnoreCase("CS") || major.equalsIgnoreCase("MATH")
                 || major.equalsIgnoreCase("EE") || major.equalsIgnoreCase("ITI")
                 || major.equalsIgnoreCase("BAIT"))) {
@@ -291,6 +480,12 @@ public class TuitionManager {
      * @return false if credits is a negative number or not an integer and true otherwise.
      */
     private boolean creditsError() {
+
+        if(this.credits == null) {
+
+            System.out.println("Missing data in command line.");
+            return false;
+        }
 
         try {
             Integer.parseInt(this.credits);
@@ -309,19 +504,119 @@ public class TuitionManager {
     }
 
     /**
+     * Helper method for enrollCommand(), checks if the credits enrolled are valid.
+     * @return false if credits enrolled are null or not an integer and true otherwise.
+     */
+    private boolean creditsEnrolledError() {
+
+        if(this.creditsEnrolled == null) {
+
+            System.out.println("Missing data in command line.");
+            return false;
+        }
+
+        try {
+            Integer.parseInt(this.creditsEnrolled);
+        }
+        catch (NumberFormatException e) {
+            System.out.println("Credits enrolled is not an integer.");
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * Helper method for addCommand(), checks if a Tri-state student's state is valid.
+     * @return false if state is null or an invalid state.
+     */
+    private boolean stateError() {
+
+        if(this.state == null) {
+
+            System.out.println("Missing the state code.");
+            return false;
+        }
+
+        if(!(state.equalsIgnoreCase("NY") || state.equalsIgnoreCase("CT"))) {
+
+            System.out.println(state + ": Invalid state code.");
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Helper method for addCommand(), checks to see the type of student to be added and creates an instance of that student.
+     * @param profile, the profile of the student to be added.
+     */
+    private void createStudentType(Profile profile) {
+
+        if(opCode.equals("AR") || opCode.equals("R")) {
+
+            this.student = new Resident(profile, stMajor, Integer.parseInt(this.credits));
+        }
+        else if(opCode.equals("AN") || opCode.equals("N")) {
+
+            this.student = new NonResident(profile, stMajor, Integer.parseInt(this.credits));
+        }
+        else if(opCode.equals("AT") || opCode.equals("T")) {
+
+            this.student = new TriState(profile, stMajor, Integer.parseInt(this.credits), this.state);
+        }
+        else {
+
+            this.student = new International(profile, stMajor, Integer.parseInt(this.credits), this.studyAbroad);
+        }
+
+    }
+
+    /**
+     * Helper method for convertToTokens() method, sets the necessary tokens to the instance
+     * variables involved with enrolling a student.
+     */
+    private void enrollmentTokens() {
+
+        if (arrOfTokens.length > 1) {
+            this.fname = arrOfTokens[1];
+        }
+        if (arrOfTokens.length > 2) {
+            this.lname = arrOfTokens[2];
+        }
+        if (arrOfTokens.length > 3) {
+            this.dob = arrOfTokens[3];
+        }
+        else {
+            this.dob = null;
+        }
+        if (arrOfTokens.length > 4) {
+            this.creditsEnrolled = arrOfTokens[4];
+        }
+        else {
+            this.creditsEnrolled = null;
+        }
+    }
+
+
+    /**
      * Helper method for run() command, uses .split() method to grab the operation code and data tokens necessary to
      * manage the student roster.
-     * @param elements the String input from line commands that is to be converted.
      */
-    private void convertToTokens(String elements) {
+    private void convertToTokens(String tokens) {
 
-        String [] arrOfTokens = elements.split("\\s+");
+        this.arrOfTokens = tokens.split("\\s+|,");
 
-            this.opCode = arrOfTokens[0];
+        this.opCode = arrOfTokens[0];
             if(this.opCode.equals("L")){
                 this.major = arrOfTokens[1].toUpperCase();
-            }else {
-
+            }
+            else if (this.opCode.equals("LS")) {
+                this.file = arrOfTokens[1];
+            }
+            else if (this.opCode.equals("E")) {
+                enrollmentTokens();
+            }
+            else {
                 if (arrOfTokens.length > 1) {
                     this.fname = arrOfTokens[1];
                 }
@@ -331,24 +626,40 @@ public class TuitionManager {
                 if (arrOfTokens.length > 3) {
                     this.dob = arrOfTokens[3];
                 }
+                else {
+                    this.dob = null;
+                }
                 if (arrOfTokens.length > 4) {
                     this.major = arrOfTokens[4];
                 }
                 if (arrOfTokens.length > 5) {
                     this.credits = arrOfTokens[5];
                 }
-            }
+                else {
+                    this.credits = null;
+                }
+                if (arrOfTokens.length > 6 && (opCode.equals("AT") || opCode.equals("T"))) {
+                    this.state = arrOfTokens[6];
+                }
+                else {
+                    this.state = null;
+                }
+                if (arrOfTokens.length > 6 && (opCode.equals("AI") || opCode.equals("I"))) {
 
+                    this.studyAbroad = Boolean.parseBoolean(arrOfTokens[6]);
+                }
+            }
     }
 
     /**
      * Method for parsing input from the command line and continuously reads line commands until the user quits.
      */
-    public void run() {
+    public void run() throws FileNotFoundException {
 
         Scanner sc = new Scanner(System.in);
         sc.useDelimiter("[\\r\\n]+");
         this.roster = new Roster();
+        this.enrollList = new Enrollment();
         System.out.println("Tuition Manager running...");
 
         while(sc.hasNextLine()) {
