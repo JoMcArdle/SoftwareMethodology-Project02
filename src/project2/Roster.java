@@ -190,4 +190,18 @@ public class Roster {
         }
 
     }
+
+    /**
+     *
+     * @param s
+     * @return
+     */
+    public Student returnStudent (Student s) {
+
+        if(contains(s) == true) {
+
+            s = roster[find(s)];
+        }
+        return s;
+    }
 }
