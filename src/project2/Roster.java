@@ -57,6 +57,7 @@ public class Roster {
     public boolean add(Student student){
         if(numStudents == roster.length-1) {
             grow();
+
         }else if(contains(student)){
             return false;
         }else {

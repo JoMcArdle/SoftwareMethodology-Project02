@@ -12,6 +12,7 @@ public class Resident extends Student{
     public static final int UNIVERSITY_FEE = 3268;
     public static final double UNIVERSITY_FEE_PART_TIME_RATE = 2614.4;
 
+
     /**
      * Empty constructor
      */
@@ -25,10 +26,10 @@ public class Resident extends Student{
      * @param major, the major of the resident student.
      * @param creditCompleted, the number of credits a Resident student has completed.
      */
-    public Resident(Profile profile, Major major, int creditCompleted) {
+    public Resident(Profile profile, Major major, int creditCompleted, int scholarship) {
 
         super(profile, major, creditCompleted);
-
+        this.scholarship = scholarship;
     }
 
     /**
@@ -39,6 +40,7 @@ public class Resident extends Student{
 
         super(profile);
     }
+
 
 
     /**
@@ -125,7 +127,7 @@ public class Resident extends Student{
 
         Profile profile = new Profile("Lopez", "Juan", new Date("10/12/1992"));
 
-        Resident resident = new Resident(profile, Major.BAIT, 90);
+        Resident resident = new Resident(profile, Major.BAIT, 90,0);
 
         System.out.println(resident);
 

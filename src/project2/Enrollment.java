@@ -121,6 +121,16 @@ public class Enrollment {
 
         }
 
+
+        public EnrollStudent returnEnrollStudent (EnrollStudent s) {
+
+                if(contains(s) == true) {
+
+                        s = enrollStudents[find(s)];
+                }
+                return s;
+        }
+
         public static void main(String[] args) {
 
                 Enrollment e = new Enrollment();
