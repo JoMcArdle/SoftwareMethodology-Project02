@@ -69,7 +69,7 @@ public class EnrollStudent{
      */
     @Override
     public String toString() {
-        return this.profile + "credits Enrolled:" + this.creditsEnrolled ;
+        return this.profile + " credits Enrolled: " + this.creditsEnrolled ;
 
     }
 }

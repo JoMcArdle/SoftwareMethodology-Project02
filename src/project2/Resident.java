@@ -68,7 +68,7 @@ public class Resident extends Student{
     @Override
     public double tuitionDue(int creditsEnrolled) {
 
-        double tuition = -1;
+        double tuition = 0;
 
         if(creditsEnrolled >= MIN_CREDITS && creditsEnrolled < MIN_CREDITS_FULL_TIME) { // Part time
 
@@ -129,7 +129,7 @@ public class Resident extends Student{
 
         System.out.println(resident);
 
-        System.out.println(resident.tuitionDue(20));
+        System.out.println(resident.tuitionDue(25));
 
     }
 

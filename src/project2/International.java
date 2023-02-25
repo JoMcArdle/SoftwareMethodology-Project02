@@ -44,10 +44,8 @@ public class International extends NonResident{
 
             return false;
         }
-        else {
+            return super.isValid(creditEnrolled);
 
-        }
-        return super.isValid(creditEnrolled);
     }
 
     /**

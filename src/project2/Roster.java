@@ -6,7 +6,7 @@ package project2;
  */
 public class Roster {
     private Student[] roster;
-    private int size = 5;
+    private int size = 100;
     public int numStudents = 0;
     private int location;
     private static final int INCREASE_CAPACITY = 4;
@@ -57,16 +57,14 @@ public class Roster {
     public boolean add(Student student){
         if(numStudents == roster.length-1) {
             grow();
-
         }else if(contains(student)){
             return false;
-        }else{
+        }else {
             roster[numStudents] = student;
             numStudents++;
             return true;
         }
         return false;
-
     } //add student to end of array
     /**
      * This method will attempt to find a student in the roster and remove it.
@@ -202,6 +200,7 @@ public class Roster {
         if(contains(s) == true) {
 
             s = roster[find(s)];
+            return s;
         }
         return s;
     }

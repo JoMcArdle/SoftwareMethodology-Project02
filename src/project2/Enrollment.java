@@ -54,18 +54,17 @@ public class Enrollment {
          * @param enrollStudent
          * @return it returns true if we add a enrollStudent to the
          */
-        public boolean add(EnrollStudent enrollStudent){
+        public void add(EnrollStudent enrollStudent){
                 if(numEnrollments == enrollStudents.length){
                         grow();
                 }else if(contains(enrollStudent)){
                         enrollStudents[find(enrollStudent)] = enrollStudent;
-                        return false;
-                }else{
+                }
+                else{
                         enrollStudents[numEnrollments] = enrollStudent;
                         numEnrollments++;
-                        return true;
                 }
-                return false;
+
 
         } //add to the end of array
         //move the last one in the array to replace the deleting index position
@@ -107,8 +106,8 @@ public class Enrollment {
          * This method will print all the students enrolled as they were inserted
          */
         public void print() {
-                for(EnrollStudent e: enrollStudents){
-                        System.out.println(e);
+                for(int i= 0; i < numEnrollments; i++){
+                        System.out.println(enrollStudents[i]);
                 }
         } //print the array as is without sorting
 
@@ -126,7 +125,26 @@ public class Enrollment {
 
                 Enrollment e = new Enrollment();
                 Profile p1= new Profile("Lara", "Juan", new Date("12/14/1990"));
-                EnrollStudent es = new EnrollStudent(p1, 25);
+                EnrollStudent e1 = new EnrollStudent(p1, 25);
+                e.add(e1);
+                e.print();
+                System.out.println("*************************");
+
+                Profile p2= new Profile("Lara", "Juan", new Date("12/14/1990"));
+                EnrollStudent e2 = new EnrollStudent(p2, 12);
+
+                Profile p3= new Profile("Lara", "Juan", new Date("12/14/1990"));
+                EnrollStudent e3 = new EnrollStudent(p3, 24);
+                e.add(e2);
+                e.print();
+                System.out.println("*************************");
+                e.add(e3);
+                e.print();
+                Profile p4= new Profile("Mara", "dfgh", new Date("12/14/1990"));
+                EnrollStudent e4 = new EnrollStudent(p4, 24);
+                System.out.println("*************************");
+                e.add(e4);
+                e.print();
 
         }
 }

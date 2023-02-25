@@ -62,7 +62,7 @@ public class NonResident extends Student{
             tuition = TUITION_FEE + UNIVERSITY_FEE;
 
         }
-        else if(creditsEnrolled > CREDITS_FULL_TIME && creditsEnrolled <= MAX_CREDITS){
+        else if(creditsEnrolled > CREDITS_FULL_TIME && creditsEnrolled <= MAX_CREDITS){ // Beyond full time
 
             tuition = (TUITION_FEE) + (UNIVERSITY_FEE) + (CREDIT_HOUR_RATE * (creditsEnrolled - CREDITS_FULL_TIME));
         }

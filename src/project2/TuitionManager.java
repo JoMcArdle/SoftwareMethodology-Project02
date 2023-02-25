@@ -161,7 +161,6 @@ public class TuitionManager {
 
         this.student = new Resident(stProfile, null, 0);
         this.student = roster.returnStudent(this.student);
-
         if(!(roster.contains(student))) {
             System.out.println("Cannot enroll: " + " " + this.fname + " " + this.lname + " " +
                     this.dob + " is not in the roster.");
@@ -171,16 +170,8 @@ public class TuitionManager {
             System.out.println(creditsEnrolled + ": invalid credit hours.");
             return false;
         }
-        else if(enrollList.contains(enrollStudent)) {
-            enrollStudent.setCreditsEnrolled(Integer.parseInt(this.creditsEnrolled));
-            enrollList.updateCreditsEnrolled(enrollStudent);
-            System.out.println(this.fname + " " + this.lname + " " + this.dob + " "
-                    + " enrolled " + Integer.parseInt(this.creditsEnrolled)
-                    + " credits.");
-            return true;
-        }
-        else {
 
+        else {
             enrollList.add(enrollStudent);
             numEnrolledStudents++;
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " "
