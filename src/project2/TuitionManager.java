@@ -838,23 +838,18 @@ public class TuitionManager {
     private void convertToTokens(String tokens) {
 
         this.arrOfTokens = tokens.split("\\s+|,");
+       {
 
-        this.opCode = arrOfTokens[0];
-            if(this.opCode.equals("L")){
+            this.opCode = arrOfTokens[0];
+            if (this.opCode.equals("L")) {
                 this.major = arrOfTokens[1].toUpperCase();
-            }
-            else if (this.opCode.equals("LS")) {
+            } else if (this.opCode.equals("LS")) {
                 this.file = arrOfTokens[1];
-            }
-            else if (this.opCode.equals("E")) {
+            } else if (this.opCode.equals("E")) {
                 enrollmentTokens();
-            }
-
-            else if(this.opCode.equals("S")) {
+            } else if (this.opCode.equals("S")) {
                 scholarshipTokens();
-            }
-
-            else {
+            } else {
                 if (arrOfTokens.length > 1) {
                     this.fname = arrOfTokens[1];
                 }
@@ -863,8 +858,7 @@ public class TuitionManager {
                 }
                 if (arrOfTokens.length > 3) {
                     this.dob = arrOfTokens[3];
-                }
-                else {
+                } else {
                     this.dob = null;
                 }
                 if (arrOfTokens.length > 4) {
@@ -872,14 +866,12 @@ public class TuitionManager {
                 }
                 if (arrOfTokens.length > 5) {
                     this.credits = arrOfTokens[5];
-                }
-                else {
+                } else {
                     this.credits = null;
                 }
                 if (arrOfTokens.length > 6 && (opCode.equals("AT") || opCode.equals("T"))) {
                     this.state = arrOfTokens[6];
-                }
-                else {
+                } else {
                     this.state = null;
                 }
                 if (arrOfTokens.length > 6 && (opCode.equals("AI") || opCode.equals("I"))) {
@@ -887,6 +879,7 @@ public class TuitionManager {
                     this.studyAbroad = Boolean.parseBoolean(arrOfTokens[6]);
                 }
             }
+        }
     }
     //------------------------------------------------------------------------------------------------------------------
     //endregion
@@ -905,6 +898,9 @@ public class TuitionManager {
         while(sc.hasNextLine()) {
 
             String command = sc.nextLine();
+            if(command.length() ==0){
+                continue;
+            }
 
             convertToTokens(command);
 

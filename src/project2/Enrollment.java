@@ -38,11 +38,10 @@ public class Enrollment {
          * @return If the enrollStudent is in the Enrollment array, the method will return the index where the enrollStudent is located. If not, it will return -1.
          */
         private int find(EnrollStudent enrollStudent){
-                location = 0;
                 int result = NOT_FOUND;
-                for (int i = location; i< numEnrollments; i++) {
-                        if (this.enrollStudents[location].equals(enrollStudent)) {
-                                result = location;
+                for (int i = 0; i< numEnrollments; i++) {
+                        if (this.enrollStudents[i].equals(enrollStudent)) {
+                                result = i;
                                 return result;
                         }
                 }
@@ -77,10 +76,9 @@ public class Enrollment {
          */
         public boolean remove(EnrollStudent enrollStudent){
                 if(contains(enrollStudent)){
-                        for(int i= find(enrollStudent); i < numEnrollments -2; i++) {
-                                this.enrollStudents[find(enrollStudent)] = enrollStudents[i+1];
+                        for(int i= find(enrollStudent); i <= numEnrollments -2; i++) {
+                                this.enrollStudents[i] = enrollStudents[i+1];
                         }
-                        enrollStudents[numEnrollments-1] = null;
                         numEnrollments--;
                         return true;
                 }else{
@@ -165,7 +163,7 @@ public class Enrollment {
                 EnrollStudent e2 = new EnrollStudent(p2, 12);
 
                 Profile p3= new Profile("Lara", "Juan", new Date("12/14/1990"));
-                EnrollStudent e3 = new EnrollStudent(p3, 24);
+                EnrollStudent e3 = new EnrollStudent(p3, 6);
                 e.add(e2);
                 e.print();
                 System.out.println("*************************");
@@ -173,8 +171,21 @@ public class Enrollment {
                 e.print();
                 Profile p4= new Profile("Mara", "dfgh", new Date("12/14/1990"));
                 EnrollStudent e4 = new EnrollStudent(p4, 24);
+                Profile p5= new Profile("Ana", "dfgh", new Date("12/14/1990"));
+                EnrollStudent e5 = new EnrollStudent(p5, 10);
+                Profile p6= new Profile("Juanita", "dfgh", new Date("12/14/1990"));
+                EnrollStudent e6 = new EnrollStudent(p6,14);
                 System.out.println("*************************");
                 e.add(e4);
+                e.add(e5);
+                e.add(e6);
+                System.out.println(e.find(e4));
+                System.out.println("########## Before removing ***************");
+                System.out.println(e.contains(e4));// before removed
+                e.print();
+                e.remove(e3);
+                System.out.println("########## After removing ***************");
+                System.out.println(e.contains(e4)); //after remove
                 e.print();
 
         }
