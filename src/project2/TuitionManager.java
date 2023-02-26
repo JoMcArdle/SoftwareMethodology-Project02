@@ -18,7 +18,6 @@ public class TuitionManager {
     private String creditsEnrolled;
     private String state;
     private String scholarship;
-
     private boolean studyAbroad;
     private int numStudents;
     private int numEnrolledStudents;
