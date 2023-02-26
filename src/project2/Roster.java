@@ -177,8 +177,8 @@ public class Roster {
     }
 
     /**
-     * The updateMajor will update the major of n student in the roster
-     * @param s
+     * The updateMajor will update the major of a student in the roster
+     * @param s, the student whose major to update.
      * @return if the student is in the roster, it will update it and return true. If not, it will return false;
      */
     public boolean updateMajor(Student s){
@@ -192,9 +192,9 @@ public class Roster {
     }
 
     /**
-     *
-     * @param s
-     * @return
+     * Method to find a given student in the roster and return that student.
+     * @param s, the student to find in the roster.
+     * @return the student found in the roster, else return the instance of the student that was passed into the method.
      */
     public Student returnStudent (Student s) {
 

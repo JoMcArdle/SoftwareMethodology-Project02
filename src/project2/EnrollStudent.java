@@ -55,6 +55,24 @@ public class EnrollStudent{
     }
 
     /**
+     * Getter method to return the profile of an enrolled student.
+     * @return the profile of the enrolled student.
+     */
+    public Profile getProfile() {
+
+        return this.profile;
+    }
+
+    /**
+     * Setter method to set the profile of an enrolled student given a specific profile.
+     * @param profile, the profile to initialize the enrolled student's profile instance variable.
+     */
+    public void setProfile(Profile profile) {
+
+        this.profile = profile;
+    }
+
+    /**
      *
      * Override method
      * The equals method will compare two enrollments to determine if they are equals based on their profile
@@ -78,7 +96,7 @@ public class EnrollStudent{
      */
     @Override
     public String toString() {
-        return this.profile + " credits Enrolled: " + this.creditsEnrolled ;
+        return this.profile + " credits enrolled: " + this.creditsEnrolled ;
 
     }
 }

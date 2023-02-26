@@ -2,6 +2,7 @@ package project2;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.io.File;
+import java.text.DecimalFormat;
 
 /**
  * User interface class that handles line commands entered on the console and displays the results on the console.
@@ -33,6 +34,7 @@ public class TuitionManager {
     private static final int MIN_CREDITS_FULL_TIME = 12;
     private static final int MAX_SCHOLARSHIP_AMOUNT = 10000;
     private static final int MIN_SCHOLARSHIP_AMOUNT = 1;
+    private static final int NUM_CREDITS_FOR_GRADUATION = 120;
 
     /**
      * Empty constructor, used by the driver class RunProject1.
@@ -119,6 +121,10 @@ public class TuitionManager {
 
     }
 
+
+
+    //region Commands for operations() method
+    //------------------------------------------------------------------------------------------------------------------
     /**
      * Helper method for operations(), loads the student roster from an external file.
      * @throws FileNotFoundException
@@ -163,10 +169,8 @@ public class TuitionManager {
         this.enrollStudent = new EnrollStudent(stProfile,
                 Integer.parseInt(this.creditsEnrolled));
 
-        this.student = new Resident(stProfile,Major.CS, 0, 0);
+        this.student = new Resident(stProfile, Major.CS, 0, 0);
         this.student = roster.returnStudent(this.student);
-
-
 
         if(!(roster.contains(student))) {
             System.out.println("Cannot enroll: " + " " + this.fname + " " + this.lname + " " +
@@ -174,7 +178,7 @@ public class TuitionManager {
             return false;
         }
         else if(student.isValid(Integer.parseInt(creditsEnrolled)) == false) {
-            System.out.println(creditsEnrolled + ": invalid credit hours.");
+            System.out.println(studentType(student) + " " + creditsEnrolled + ": invalid credit hours.");
             return false;
         }
         else {
@@ -217,6 +221,10 @@ public class TuitionManager {
      */
     private boolean scholarshipCommand() {
 
+        if(dateError() == false) {
+
+            return false;
+        }
 
         this.date = new Date(this.dob);
         Profile stProfile = new Profile(this.lname, this.fname, date);
@@ -286,6 +294,51 @@ public class TuitionManager {
      */
     private boolean printTuitionCommand() {
 
+        DecimalFormat df = new DecimalFormat("#,###.00");
+
+        System.out.println("** Tuition due **");
+
+        for (int i = 0; i < numEnrolledStudents-1; i++) {
+            enrollStudent = enrollList.returnEnrollStudent(i);
+            this.student = new Resident(enrollStudent.getProfile(), Major.CS, 0, 0);
+            student = roster.returnStudent(student);
+
+            if (student instanceof Resident residentStudent) {
+                System.out.println(residentStudent.getProfile() + " (Resident) " + " enrolled "
+                        + enrollStudent.getCreditsEnrolled() + " credits: " + " tuition due: $"
+                        + df.format(residentStudent.tuitionDue(enrollStudent.getCreditsEnrolled())));
+
+            } else if (student instanceof NonResident nonResidentStudent) {
+
+                if (nonResidentStudent instanceof TriState triStateStudent) {
+                    System.out.println(triStateStudent.getProfile() + " (Tri-state " + triStateStudent.getState().toUpperCase()
+                            + ")" + " enrolled " + enrollStudent.getCreditsEnrolled() + " credits: " + " tuition due: $"
+                            + df.format(triStateStudent.tuitionDue(enrollStudent.getCreditsEnrolled())));
+                }
+                else if (nonResidentStudent instanceof International internationalStudent) {
+
+                    if (internationalStudent.getIsStudyAbroad() == true) {
+                        System.out.println(internationalStudent.getProfile() + " (International student study abroad) "
+                                + " enrolled " + enrollStudent.getCreditsEnrolled() + " credits: " + " tuition due: $"
+                                + df.format(internationalStudent.tuitionDue(enrollStudent.getCreditsEnrolled())));
+
+                    }
+                    else {
+                        System.out.println(internationalStudent.getProfile() + " (International student) " + " enrolled "
+                                + enrollStudent.getCreditsEnrolled() + " credits: " + " tuition due: $"
+                                + df.format(internationalStudent.tuitionDue(enrollStudent.getCreditsEnrolled())));
+                    }
+                }
+
+                else {
+                        System.out.println(nonResidentStudent.getProfile() + " (Non-Resident) " + " enrolled "
+                                + enrollStudent.getCreditsEnrolled() + " credits: " + " tuition due: $"
+                                + df.format(nonResidentStudent.tuitionDue(enrollStudent.getCreditsEnrolled())));
+                    }
+            }
+        }
+
+        System.out.println("* end of tuition due *");
         return true;
     }
 
@@ -296,6 +349,29 @@ public class TuitionManager {
      */
     private boolean semesterEndCommand() {
 
+        for(int i = 0; i < numEnrolledStudents-1; i++) {
+
+            enrollStudent = enrollList.returnEnrollStudent(i);
+            this.student = new Resident(enrollStudent.getProfile(), Major.CS, 0, 0);
+            student = roster.returnStudent(student);
+            student.setCreditCompleted(student.getCreditCompleted() + enrollStudent.getCreditsEnrolled());
+
+        }
+        System.out.println("Credit completed has been updated.");
+
+        System.out.println("** list of students eligible for graduation **");
+
+        for(int i = 0; i < numEnrolledStudents-1; i++) {
+
+            enrollStudent = enrollList.returnEnrollStudent(i);
+            this.student = new Resident(enrollStudent.getProfile(), Major.CS, 0, 0);
+            student = roster.returnStudent(student);
+
+            if(student.getCreditCompleted() >= NUM_CREDITS_FOR_GRADUATION) {
+
+                System.out.println(student);
+            }
+        }
         return true;
     }
 
@@ -429,14 +505,18 @@ public class TuitionManager {
      * first name, and DOB.
      */
     private void listCommand() {
-        if(!(this.major.equalsIgnoreCase("SAS") || this.major.equalsIgnoreCase("SOE") || this.major.equalsIgnoreCase("SC&I")
-        || this.major.equalsIgnoreCase("RBS"))){
+        if(!(this.major.equalsIgnoreCase("SAS") || this.major.equalsIgnoreCase("SOE")
+                || this.major.equalsIgnoreCase("SC&I") || this.major.equalsIgnoreCase("RBS"))) {
+
             System.out.println("School doesn't exist: " + this.major);
-        }else {
+
+        }
+        else {
 
             System.out.println("Students in " + this.major);
             roster.printMajor(this.major);
             System.out.println("End of list");
+
         }
 
     }
@@ -473,7 +553,14 @@ public class TuitionManager {
             return false;
         }
     }
+    //------------------------------------------------------------------------------------------------------------------
+    //endregion
 
+
+
+
+    //region Helper methods for the Commands in operations().
+    //------------------------------------------------------------------------------------------------------------------
     /**
      * Helper method for addCommand(), calls the isValid() method from Date class and prints whether a student is
      * younger than 16 years old or if the DOB is invalid.
@@ -598,6 +685,10 @@ public class TuitionManager {
     }
 
 
+    /**
+     * Helper method for scholarshipCommand(), checks if a scholarship is null or valid.
+     * @return false if null or not an integer or an invalid amount and true otherwise.
+     */
     private boolean scholarshipError() {
 
         if(this.scholarship == null) {
@@ -631,7 +722,6 @@ public class TuitionManager {
 
         if(opCode.equals("AR") || opCode.equals("R")) {
 
-
             this.student = new Resident(profile, stMajor, Integer.parseInt(this.credits),0);
 
             this.student = new Resident(profile, stMajor, Integer.parseInt(this.credits), 0);
@@ -652,6 +742,42 @@ public class TuitionManager {
 
     }
 
+    /**
+     * Helper method that returns a given student's type.
+     * @param student, the student to determine what type of student they are.
+     * @return a string value indicating what type of student the given student is.
+     */
+    private String studentType(Student student) {
+
+        if (student instanceof Resident residentStudent) {
+            return "(Resident)";
+        }
+        if (student instanceof NonResident nonResidentStudent) {
+            if (nonResidentStudent instanceof TriState triStateStudent) {
+                return "(Tri-state)";
+            }
+            else if(nonResidentStudent instanceof International internationalStudent) {
+                if(internationalStudent.getIsStudyAbroad() == true) {
+                    return "(International student study abroad)";
+                }
+                else {
+                    return "(International student)";
+                }
+            }
+            else {
+                return "(Non-Resident)";
+            }
+        }
+        return "";
+    }
+    //------------------------------------------------------------------------------------------------------------------
+    //endregion
+
+
+
+
+    //region Helper methods for the run() command
+    //------------------------------------------------------------------------------------------------------------------
     /**
      * Helper method for convertToTokens() method, sets the necessary tokens to the instance
      * variables involved with enrolling a student.
@@ -762,6 +888,8 @@ public class TuitionManager {
                 }
             }
     }
+    //------------------------------------------------------------------------------------------------------------------
+    //endregion
 
     /**
      * Method for parsing input from the command line and continuously reads line commands until the user quits.
