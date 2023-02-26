@@ -1,5 +1,9 @@
 package project2;
 
+/**
+ * Non-Resident student class, extends the Student class.
+ * @author Joshua McArdle
+ */
 public class NonResident extends Student{
 
     //no additional instance variables
@@ -86,9 +90,6 @@ public class NonResident extends Student{
      */
     @Override
     public String toString() {
-
-        //return getProfile() + " " + getMajor().toString() + " credits completed: " + getCreditCompleted()
-               // + " (" + returnStanding(this) + ")" + " (" + "non-resident" + ")";
 
         return super.toString() + " (" + "non-resident" + ")";
     }

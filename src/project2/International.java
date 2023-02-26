@@ -1,5 +1,9 @@
 package project2;
 
+/**
+ * International student class, extends the NonResident student class.
+ * @author Joshua McArdle
+ */
 public class International extends NonResident{
 
     private boolean isStudyAbroad; //only instance variable, do not add more.
@@ -26,6 +30,15 @@ public class International extends NonResident{
     }
 
     /**
+     * Getter method that returns the boolean value of an International student's isStudyAbroad instance variable.
+     * @return isStudyAbroad boolean value, true or false
+     */
+    public boolean getIsStudyAbroad() {
+
+        return this.isStudyAbroad;
+    }
+
+    /**
      * Checks if the number of credits are valid.
      * @param creditEnrolled credits that are to be checked whether they are valid or not.
      * @return false if credits are less than the minimum amount of credits or greater than the maximum amount of
@@ -45,9 +58,6 @@ public class International extends NonResident{
             return false;
         }
 
-        else {
-
-        }
         return super.isValid(creditEnrolled);
 
     }
@@ -59,23 +69,22 @@ public class International extends NonResident{
      */
     @Override
     public double tuitionDue(int creditsEnrolled) {
-        //International students must enroll at least 12 credits, except for the international students who are participating in the study abroad
-        //program. The maximum number of credits enrolled for the international students in the study abroad program is 12.
 
-        double tuition = -1;;
+        double tuition = 0.0;
 
         if (this.isStudyAbroad) {
-            if (creditsEnrolled == MIN_CREDITS_FULL_TIME) { // Max credits for international students who participate in study abroad is 12.
+
                 tuition = UNIVERSITY_FEE + HEALTH_INSURANCE_FEE;
-            }else if(creditsEnrolled >= MIN_CREDITS && creditsEnrolled < MIN_CREDITS_FULL_TIME){// Part time
-                tuition = (UNIVERSITY_FEE_PART_TIME_RATE) + (creditsEnrolled* CREDIT_HOUR_RATE);
-            }
-        }else{
-            //International Students that are not in the study abroad must be at least Full time
-                if (creditsEnrolled >= MIN_CREDITS_FULL_TIME && creditsEnrolled <= CREDITS_FULL_TIME) { // Full time
+        }
+        else {
+                if (creditsEnrolled >= MIN_CREDITS_FULL_TIME && creditsEnrolled <= CREDITS_FULL_TIME) {
+
                     tuition = TUITION_FEE + UNIVERSITY_FEE + HEALTH_INSURANCE_FEE;
-                } else if (creditsEnrolled > CREDITS_FULL_TIME && creditsEnrolled <= MAX_CREDITS) {// Beyond full time
-                    tuition = TUITION_FEE + UNIVERSITY_FEE + HEALTH_INSURANCE_FEE + (creditsEnrolled - CREDITS_FULL_TIME) * CREDIT_HOUR_RATE;
+
+                } else if (creditsEnrolled > CREDITS_FULL_TIME && creditsEnrolled <= MAX_CREDITS) {
+
+                    tuition = TUITION_FEE + UNIVERSITY_FEE + HEALTH_INSURANCE_FEE
+                            + (creditsEnrolled - CREDITS_FULL_TIME) * CREDIT_HOUR_RATE;
                 }
             }
             return tuition;
@@ -98,10 +107,7 @@ public class International extends NonResident{
     @Override
     public String toString() {
 
-        //return getProfile() + " " + getMajor().toString() + " credits completed: " + getCreditCompleted()
-        // + " (" + returnStanding(this) + ")" + " (" + "non-resident" + ")";
-
-        return super.toString() + " (" + "international" + ")" + isStudyAbroad; //added variable
+        return super.toString() + " (" + "international" + ")"; //added variable
     }
 
     public static void main(String[] args) {

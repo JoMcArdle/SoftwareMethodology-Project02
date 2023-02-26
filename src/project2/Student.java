@@ -50,6 +50,12 @@ public abstract class Student implements Comparable<Student>{
     }
 
     /**
+     * Setter method that sets the given profile for a student.
+     * @param profile
+     */
+    public void setProfile(Profile profile) {this.profile = profile;}
+
+    /**
      * getMajor will return the student major
      * @return major
      */
@@ -206,9 +212,10 @@ public abstract class Student implements Comparable<Student>{
     }
 
     /**
-     * Polymorphism is used here.
-     * @param creditEnrolled
-     * @return
+     * Checks if the given credits enrolled for a student is valid or not.
+     * @param creditEnrolled, the credits enrolled for a student.
+     * @return false if credits enrolled are less than the minimum amount of credits for enrollment or greater than
+     * the maximum amount of credits for enrollment and true otherwise.
      */
     public boolean isValid(int creditEnrolled) {
 
@@ -222,14 +229,14 @@ public abstract class Student implements Comparable<Student>{
     }
 
     /**
-     * Polymorphism is used here.
-     * @param creditsEnrolled
+     * Abstract method to calculate the tuition due for each type of student.
+     * @param creditsEnrolled, the credits enrolled for a student.
      * @return
      */
     public abstract double tuitionDue(int creditsEnrolled);
 
     /**
-     * Polymorphism is used here.
+     * Abstract method that determines whether a student is a resident or not.
      * @return
      */
     public abstract boolean isResident();

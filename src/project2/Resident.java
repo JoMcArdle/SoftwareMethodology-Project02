@@ -1,5 +1,9 @@
 package project2;
 
+/**
+ * Resident student class, extends the Student class.
+ * @author Joshua McArdle
+ */
 public class Resident extends Student{
 
     private int scholarship; //this is the only instance variable, do not add more.
@@ -10,7 +14,7 @@ public class Resident extends Student{
     public static final int CREDIT_HOUR_RATE = 404;
     public static final int TUITION_FEE = 12536;
     public static final int UNIVERSITY_FEE = 3268;
-    public static final double UNIVERSITY_FEE_PART_TIME_RATE = 2614.4;
+    public static final double UNIVERSITY_FEE_PART_TIME_RATE = 2614.40;
 
 
     /**
@@ -70,7 +74,7 @@ public class Resident extends Student{
     @Override
     public double tuitionDue(int creditsEnrolled) {
 
-        double tuition = 0;
+        double tuition = 0.0;
 
         if(creditsEnrolled >= MIN_CREDITS && creditsEnrolled < MIN_CREDITS_FULL_TIME) { // Part time
 
@@ -81,7 +85,7 @@ public class Resident extends Student{
 
             tuition = TUITION_FEE + UNIVERSITY_FEE;
 
-            if(scholarship >0) {
+            if(scholarship > 0) {
 
                 tuition = tuition - scholarship;
             }
@@ -96,7 +100,6 @@ public class Resident extends Student{
                 tuition = tuition - scholarship;
             }
         }
-
         return tuition;
     }
 

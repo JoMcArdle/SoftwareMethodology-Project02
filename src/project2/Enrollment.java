@@ -109,8 +109,13 @@ public class Enrollment {
                 for(int i= 0; i < numEnrollments; i++){
                         System.out.println(enrollStudents[i]);
                 }
-        } //print the array as is without sorting
+        }
 
+        /**
+         * Updates the credits enrolled for a given enrolled student.
+         * @param s, the enrolled student to update their credits enrolled.
+         * @return false if the student is not in the enrollment roster and true otherwise.
+         */
         public boolean updateCreditsEnrolled(EnrollStudent s){
                 if (find(s) >= 0){
                         enrollStudents[find(s)].setCreditsEnrolled(s.getCreditsEnrolled());
@@ -121,13 +126,29 @@ public class Enrollment {
 
         }
 
-
+        /**
+         * Returns an enrolled student from the enrollment roster.
+         * @param s, instance of a created student to use to find in the enrollment roster.
+         * @return the found enrollment student
+         */
         public EnrollStudent returnEnrollStudent (EnrollStudent s) {
 
                 if(contains(s) == true) {
 
                         s = enrollStudents[find(s)];
                 }
+                return s;
+        }
+
+        /**
+         * Returns an enrolled student given a specific location within the enrollment roster.
+         * @param location, the location where the student is in the enrollment roster.
+         * @return the enrolled student at that specified location.
+         */
+        public EnrollStudent returnEnrollStudent (int location) {
+
+                EnrollStudent s = enrollStudents[location];
+
                 return s;
         }
 

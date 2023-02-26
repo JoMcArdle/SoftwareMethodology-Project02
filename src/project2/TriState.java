@@ -1,5 +1,9 @@
 package project2;
 
+/**
+ * Tri-state student class, extends the NonResident student class.
+ * @author Joshua McArdle
+ */
 public class TriState extends NonResident{
 
     private String state; //only instance variable, do not add more.
@@ -25,6 +29,15 @@ public class TriState extends NonResident{
         super(profile, major, creditCompleted);
         this.state = state;
 
+    }
+
+    /**
+     * Getter method to return the state a Tri-state student resides from.
+     * @return the state where the tri-state student resides from.
+     */
+    public String getState() {
+
+        return this.state;
     }
 
     /**
@@ -101,10 +114,8 @@ public class TriState extends NonResident{
     @Override
     public String toString() {
 
-        //return getProfile() + " " + getMajor().toString() + " credits completed: " + getCreditCompleted()
-               // + " (" + returnStanding(this) + ")" + " (" + "non-resident" + ")";
-
         return super.toString() + " (" + "tri-state:" + state.toUpperCase() + ")";
+
     }
 
     public static void main(String[] args) {
