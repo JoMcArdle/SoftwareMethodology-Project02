@@ -49,74 +49,23 @@ public class TuitionManager {
      */
     private void operations() throws FileNotFoundException {
 
-        switch(opCode) {
-
-            case "LS":
-                loadStudentCommand();
-                break;
-
-            case "E":
-                enrollCommand();
-                break;
-
-            case "D":
-                dropCommand();
-                break;
-
-            case "S":
-                scholarshipCommand();
-                break;
-
-            case "PE":
-                printEnrollCommand();
-                break;
-
-            case "PT":
-                printTuitionCommand();
-                break;
-
-            case "SE":
-                semesterEndCommand();
-                break;
-
-            case "AR":
-            case "AN":
-            case "AT":
-            case "AI":
-                addCommand();
-                break;
-
-            case "R":
-                removeCommand();
-                break;
-
-            case "P":
-                printCommand();
-                break;
-
-            case "PS":
-                printByStandingCommand();
-                break;
-
-            case "PC":
-                printBySchoolMajorCommand();
-                break;
-
-            case "L":
-                listCommand();
-                break;
-
-            case "C":
-                changeMajorCommand();
-                break;
-
-            case "Q":
-                System.out.println("Tuition Manager terminated.");
-                break;
-
-            default:
-                System.out.println(opCode + " is an invalid command!");
-                break;
+        switch (opCode) {
+            case "LS" -> loadStudentCommand();
+            case "E" -> enrollCommand();
+            case "D" -> dropCommand();
+            case "S" -> scholarshipCommand();
+            case "PE" -> printEnrollCommand();
+            case "PT" -> printTuitionCommand();
+            case "SE" -> semesterEndCommand();
+            case "AR", "AN", "AT", "AI" -> addCommand();
+            case "R" -> removeCommand();
+            case "P" -> printCommand();
+            case "PS" -> printByStandingCommand();
+            case "PC" -> printBySchoolMajorCommand();
+            case "L" -> listCommand();
+            case "C" -> changeMajorCommand();
+            case "Q" -> System.out.println("Tuition Manager terminated.");
+            default -> System.out.println(opCode + " is an invalid command!");
         }
 
     }
@@ -173,7 +122,7 @@ public class TuitionManager {
         this.student = roster.returnStudent(this.student);
 
         if(!(roster.contains(student))) {
-            System.out.println("Cannot enroll: " + " " + this.fname + " " + this.lname + " " +
+            System.out.println("Cannot enroll: " + this.fname + " " + this.lname + " " +
                     this.dob + " is not in the roster.");
             return false;
         }
@@ -183,10 +132,10 @@ public class TuitionManager {
         }
         else {
             enrollList.add(enrollStudent);
-            numEnrolledStudents++;
             System.out.println(this.fname + " " + this.lname + " " + this.dob + " "
-                            + " enrolled " + Integer.parseInt(this.creditsEnrolled)
-                            + " credits.");
+                    + "enrolled " + Integer.parseInt(this.creditsEnrolled)
+                    + " credits.");
+            numEnrolledStudents++;
         }
         return true;
     }
@@ -233,37 +182,11 @@ public class TuitionManager {
         this.enrollStudent = new EnrollStudent(stProfile);
         this.enrollStudent = enrollList.returnEnrollStudent(this.enrollStudent);
 
-        if(!(roster.contains(student))) {
+        if(checkResidency() == false) {
 
-            System.out.println(this.fname + " " + this.lname + " " + this.dob
-                    + " is not in the roster.");
-            return false;
-        }
-        else if(student.isResident() == false) {
-
-            System.out.println(this.fname + " " + this.lname + " " + this.dob
-                    + " is not eligible for the scholarship.");
             return false;
         }
 
-        if(student.isResident()) {
-
-            if(enrollStudent.getCreditsEnrolled() < MIN_CREDITS_FULL_TIME) {
-
-                System.out.println(this.fname + " " + this.lname + " " + this.dob
-                        + " part time student is not eligible for the scholarship.");
-                return false;
-            }
-            else if(scholarshipError() == false) {
-
-                return false;
-            }
-            else {
-                ((Resident)student).setScholarship(Integer.parseInt(this.scholarship));
-                System.out.println(this.fname + " " + this.lname + " " + this.dob
-                        + ": scholarship amount updated.");
-            }
-        }
         return true;
     }
 
@@ -294,48 +217,25 @@ public class TuitionManager {
      */
     private boolean printTuitionCommand() {
 
-        DecimalFormat df = new DecimalFormat("#,###.00");
+        if(numEnrolledStudents == 0) {
+
+            System.out.println("Student roster is empty!");
+
+            return false;
+        }
 
         System.out.println("** Tuition due **");
 
-        for (int i = 0; i < numEnrolledStudents-1; i++) {
+        for (int i = 0; i < numEnrolledStudents-3; i++) {
+
             enrollStudent = enrollList.returnEnrollStudent(i);
+
             this.student = new Resident(enrollStudent.getProfile(), Major.CS, 0, 0);
+
             student = roster.returnStudent(student);
 
-            if (student instanceof Resident residentStudent) {
-                System.out.println(residentStudent.getProfile() + " (Resident) " + " enrolled "
-                        + enrollStudent.getCreditsEnrolled() + " credits: " + " tuition due: $"
-                        + df.format(residentStudent.tuitionDue(enrollStudent.getCreditsEnrolled())));
+            printTuitionByStudentType();
 
-            } else if (student instanceof NonResident nonResidentStudent) {
-
-                if (nonResidentStudent instanceof TriState triStateStudent) {
-                    System.out.println(triStateStudent.getProfile() + " (Tri-state " + triStateStudent.getState().toUpperCase()
-                            + ")" + " enrolled " + enrollStudent.getCreditsEnrolled() + " credits: " + " tuition due: $"
-                            + df.format(triStateStudent.tuitionDue(enrollStudent.getCreditsEnrolled())));
-                }
-                else if (nonResidentStudent instanceof International internationalStudent) {
-
-                    if (internationalStudent.getIsStudyAbroad() == true) {
-                        System.out.println(internationalStudent.getProfile() + " (International student study abroad) "
-                                + " enrolled " + enrollStudent.getCreditsEnrolled() + " credits: " + " tuition due: $"
-                                + df.format(internationalStudent.tuitionDue(enrollStudent.getCreditsEnrolled())));
-
-                    }
-                    else {
-                        System.out.println(internationalStudent.getProfile() + " (International student) " + " enrolled "
-                                + enrollStudent.getCreditsEnrolled() + " credits: " + " tuition due: $"
-                                + df.format(internationalStudent.tuitionDue(enrollStudent.getCreditsEnrolled())));
-                    }
-                }
-
-                else {
-                        System.out.println(nonResidentStudent.getProfile() + " (Non-Resident) " + " enrolled "
-                                + enrollStudent.getCreditsEnrolled() + " credits: " + " tuition due: $"
-                                + df.format(nonResidentStudent.tuitionDue(enrollStudent.getCreditsEnrolled())));
-                    }
-            }
         }
 
         System.out.println("* end of tuition due *");
@@ -349,7 +249,7 @@ public class TuitionManager {
      */
     private boolean semesterEndCommand() {
 
-        for(int i = 0; i < numEnrolledStudents-1; i++) {
+        for(int i = 0; i < numEnrolledStudents-3; i++) {
 
             enrollStudent = enrollList.returnEnrollStudent(i);
             this.student = new Resident(enrollStudent.getProfile(), Major.CS, 0, 0);
@@ -361,7 +261,7 @@ public class TuitionManager {
 
         System.out.println("** list of students eligible for graduation **");
 
-        for(int i = 0; i < numEnrolledStudents-1; i++) {
+        for(int i = 0; i < numEnrolledStudents-3; i++) {
 
             enrollStudent = enrollList.returnEnrollStudent(i);
             this.student = new Resident(enrollStudent.getProfile(), Major.CS, 0, 0);
@@ -715,6 +615,47 @@ public class TuitionManager {
     }
 
     /**
+     * Helper method for scholarshipCommand(), checks if a student is a resident or not and updates their scholarship
+     * accordingly.
+     * @return false if student is not in the roster or is not a resident or is a part-time student and true otherwise.
+     */
+    private boolean checkResidency() {
+
+        if(!(roster.contains(student))) {
+
+            System.out.println(this.fname + " " + this.lname + " " + this.dob
+                    + " is not in the roster.");
+            return false;
+        }
+        else if(student.isResident() == false) {
+
+            System.out.println(this.fname + " " + this.lname + " " + this.dob
+                    + " is not eligible for the scholarship.");
+            return false;
+        }
+
+        if(student.isResident()) {
+
+            if(enrollStudent.getCreditsEnrolled() < MIN_CREDITS_FULL_TIME) {
+
+                System.out.println(this.fname + " " + this.lname + " " + this.dob
+                        + " part time student is not eligible for the scholarship.");
+                return false;
+            }
+            else if(scholarshipError() == false) {
+
+                return false;
+            }
+            else {
+                ((Resident)student).setScholarship(Integer.parseInt(this.scholarship));
+                System.out.println(this.fname + " " + this.lname + " " + this.dob
+                        + ": scholarship amount updated.");
+            }
+        }
+        return true;
+    }
+
+    /**
      * Helper method for addCommand(), checks to see the type of student to be added and creates an instance of that student.
      * @param profile, the profile of the student to be added.
      */
@@ -743,7 +684,7 @@ public class TuitionManager {
     }
 
     /**
-     * Helper method that returns a given student's type.
+     * Helper method that returns a String, indicating a given student's type.
      * @param student, the student to determine what type of student they are.
      * @return a string value indicating what type of student the given student is.
      */
@@ -769,6 +710,44 @@ public class TuitionManager {
             }
         }
         return "";
+    }
+
+    /**
+     * Helper method for printTuitionCommand(), prints out the tuition based on the student's type.
+     */
+    private void printTuitionByStudentType() {
+
+        DecimalFormat df = new DecimalFormat("#,###.00");
+
+        if (student instanceof Resident residentStudent) {
+            System.out.println(residentStudent.getProfile() + " (Resident) " + "enrolled "
+                    + enrollStudent.getCreditsEnrolled() + " credits: " + "tuition due: $"
+                    + df.format(residentStudent.tuitionDue(enrollStudent.getCreditsEnrolled())));
+
+        } else if (student instanceof NonResident nonResidentStudent) {
+
+            if (nonResidentStudent instanceof TriState triStateStudent) {
+                System.out.println(triStateStudent.getProfile() + " (Tri-state " + triStateStudent.getState().toUpperCase()
+                        + ")" + " enrolled " + enrollStudent.getCreditsEnrolled() + " credits: " + "tuition due: $"
+                        + df.format(triStateStudent.tuitionDue(enrollStudent.getCreditsEnrolled())));
+            } else if (nonResidentStudent instanceof International internationalStudent) {
+
+                if (internationalStudent.getIsStudyAbroad() == true) {
+                    System.out.println(internationalStudent.getProfile() + " (International student study abroad) "
+                            + "enrolled " + enrollStudent.getCreditsEnrolled() + " credits: " + "tuition due: $"
+                            + df.format(internationalStudent.tuitionDue(enrollStudent.getCreditsEnrolled())));
+
+                } else {
+                    System.out.println(internationalStudent.getProfile() + " (International student) " + "enrolled "
+                            + enrollStudent.getCreditsEnrolled() + " credits: " + "tuition due: $"
+                            + df.format(internationalStudent.tuitionDue(enrollStudent.getCreditsEnrolled())));
+                }
+            } else {
+                System.out.println(nonResidentStudent.getProfile() + " (Non-Resident) " + "enrolled "
+                        + enrollStudent.getCreditsEnrolled() + " credits: " + "tuition due: $"
+                        + df.format(nonResidentStudent.tuitionDue(enrollStudent.getCreditsEnrolled())));
+            }
+        }
     }
     //------------------------------------------------------------------------------------------------------------------
     //endregion
@@ -832,6 +811,27 @@ public class TuitionManager {
     }
 
     /**
+     * Helper method for convertToTokens() method, sets the necessary tokens to the instance variables based on special
+     * opCode cases.
+     */
+    private void convertSpecialTokenCases() {
+
+        if(this.opCode.equals("L")){
+            this.major = arrOfTokens[1].toUpperCase();
+        }
+        else if (this.opCode.equals("LS")) {
+            this.file = arrOfTokens[1];
+        }
+        else if (this.opCode.equals("E")) {
+            enrollmentTokens();
+        }
+
+        else if(this.opCode.equals("S")) {
+            scholarshipTokens();
+        }
+
+    }
+    /**
      * Helper method for run() command, uses .split() method to grab the operation code and data tokens necessary to
      * manage the student roster.
      */
@@ -840,6 +840,7 @@ public class TuitionManager {
         this.arrOfTokens = tokens.split("\\s+|,");
        {
 
+<<<<<<< Updated upstream
             this.opCode = arrOfTokens[0];
             if (this.opCode.equals("L")) {
                 this.major = arrOfTokens[1].toUpperCase();
@@ -879,6 +880,42 @@ public class TuitionManager {
                     this.studyAbroad = Boolean.parseBoolean(arrOfTokens[6]);
                 }
             }
+=======
+        this.opCode = arrOfTokens[0];
+
+        convertSpecialTokenCases();
+
+        if (arrOfTokens.length > 1) {
+            this.fname = arrOfTokens[1];
+        }
+        if (arrOfTokens.length > 2) {
+            this.lname = arrOfTokens[2];
+        }
+        if (arrOfTokens.length > 3) {
+            this.dob = arrOfTokens[3];
+        }
+        else {
+            this.dob = null;
+        }
+        if (arrOfTokens.length > 4) {
+            this.major = arrOfTokens[4];
+        }
+        if (arrOfTokens.length > 5) {
+            this.credits = arrOfTokens[5];
+        }
+        else {
+            this.credits = null;
+        }
+        if (arrOfTokens.length > 6 && (opCode.equals("AT") || opCode.equals("T"))) {
+            this.state = arrOfTokens[6];
+        }
+        else {
+            this.state = null;
+        }
+        if (arrOfTokens.length > 6 && (opCode.equals("AI") || opCode.equals("I"))) {
+
+            this.studyAbroad = Boolean.parseBoolean(arrOfTokens[6]);
+>>>>>>> Stashed changes
         }
     }
     //------------------------------------------------------------------------------------------------------------------
@@ -899,6 +936,10 @@ public class TuitionManager {
 
             String command = sc.nextLine();
             if(command.length() ==0){
+                continue;
+            }
+
+            if(command.length() == 0) {
                 continue;
             }
 

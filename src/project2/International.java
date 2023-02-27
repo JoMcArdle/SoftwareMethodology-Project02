@@ -107,7 +107,12 @@ public class International extends NonResident{
     @Override
     public String toString() {
 
-        return super.toString() + " (" + "international" + ")"; //added variable
+        if(isStudyAbroad == true) {
+            return super.toString() + " (" + "international:study abroad" + ")";
+        }
+        else {
+            return super.toString() + " (" + "international" + ")";
+        }
     }
 
     public static void main(String[] args) {

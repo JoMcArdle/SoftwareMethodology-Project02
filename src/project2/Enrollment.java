@@ -77,6 +77,10 @@ public class Enrollment {
         public boolean remove(EnrollStudent enrollStudent){
                 if(contains(enrollStudent)){
                         for(int i= find(enrollStudent); i <= numEnrollments -2; i++) {
+<<<<<<< Updated upstream
+=======
+                                //this.enrollStudents[find(enrollStudent)] = enrollStudents[i+1];
+>>>>>>> Stashed changes
                                 this.enrollStudents[i] = enrollStudents[i+1];
                         }
                         numEnrollments--;
