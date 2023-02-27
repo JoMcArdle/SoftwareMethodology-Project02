@@ -6,7 +6,7 @@ package project2;
  */
 public class Resident extends Student{
 
-    private int scholarship; //this is the only instance variable, do not add more.
+    private int scholarship;
     public static final int MIN_CREDITS = 3;
     public static final int MIN_CREDITS_FULL_TIME = 12;
     public static final int CREDITS_FULL_TIME = 16;
@@ -120,22 +120,7 @@ public class Resident extends Student{
     @Override
     public String toString() {
 
-        //return getProfile() + " " + getMajor().toString() + " credits completed: " + getCreditCompleted()
-                //+ " (" + returnStanding(this) + ")" + " (" + "resident" + ")";
-
         return super.toString() + " (" + "resident" + ")";
-    }
-
-    public static void main(String[] args) {
-
-        Profile profile = new Profile("Lopez", "Juan", new Date("10/12/1992"));
-
-        Resident resident = new Resident(profile, Major.BAIT, 90,0);
-
-        System.out.println(resident);
-
-        System.out.println(resident.tuitionDue(25));
-
     }
 
 }

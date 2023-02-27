@@ -115,16 +115,4 @@ public class International extends NonResident{
         }
     }
 
-    public static void main(String[] args) {
-
-        Profile profile = new Profile("Lopez", "Juan", new Date("10/12/1992"));
-
-        International international = new International(profile, Major.BAIT, 0, true);
-
-        System.out.println(international);
-
-        System.out.println(international.tuitionDue(12));
-
-
-    }
 }

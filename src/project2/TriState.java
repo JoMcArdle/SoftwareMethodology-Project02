@@ -6,7 +6,7 @@ package project2;
  */
 public class TriState extends NonResident{
 
-    private String state; //only instance variable, do not add more.
+    private String state;
     private static final int NY_TUITION_DISCOUNT = 4000;
     private static final int CT_TUITION_DISCOUNT = 5000;
 
@@ -118,15 +118,4 @@ public class TriState extends NonResident{
 
     }
 
-    public static void main(String[] args) {
-
-        Profile profile = new Profile("Lopez", "Juan", new Date("10/12/1992"));
-
-        TriState triState = new TriState(profile, Major.BAIT, 0, "NY");
-
-        System.out.println(triState);
-
-        System.out.println(triState.tuitionDue(9));
-
-    }
 }

@@ -77,10 +77,7 @@ public class Enrollment {
         public boolean remove(EnrollStudent enrollStudent){
                 if(contains(enrollStudent)){
                         for(int i= find(enrollStudent); i <= numEnrollments -2; i++) {
-<<<<<<< Updated upstream
-=======
-                                //this.enrollStudents[find(enrollStudent)] = enrollStudents[i+1];
->>>>>>> Stashed changes
+
                                 this.enrollStudents[i] = enrollStudents[i+1];
                         }
                         numEnrollments--;
@@ -154,43 +151,4 @@ public class Enrollment {
                 return s;
         }
 
-        public static void main(String[] args) {
-
-                Enrollment e = new Enrollment();
-                Profile p1= new Profile("Lara", "Juan", new Date("12/14/1990"));
-                EnrollStudent e1 = new EnrollStudent(p1, 25);
-                e.add(e1);
-                e.print();
-                System.out.println("*************************");
-
-                Profile p2= new Profile("Lara", "Juan", new Date("12/14/1990"));
-                EnrollStudent e2 = new EnrollStudent(p2, 12);
-
-                Profile p3= new Profile("Lara", "Juan", new Date("12/14/1990"));
-                EnrollStudent e3 = new EnrollStudent(p3, 6);
-                e.add(e2);
-                e.print();
-                System.out.println("*************************");
-                e.add(e3);
-                e.print();
-                Profile p4= new Profile("Mara", "dfgh", new Date("12/14/1990"));
-                EnrollStudent e4 = new EnrollStudent(p4, 24);
-                Profile p5= new Profile("Ana", "dfgh", new Date("12/14/1990"));
-                EnrollStudent e5 = new EnrollStudent(p5, 10);
-                Profile p6= new Profile("Juanita", "dfgh", new Date("12/14/1990"));
-                EnrollStudent e6 = new EnrollStudent(p6,14);
-                System.out.println("*************************");
-                e.add(e4);
-                e.add(e5);
-                e.add(e6);
-                System.out.println(e.find(e4));
-                System.out.println("########## Before removing ***************");
-                System.out.println(e.contains(e4));// before removed
-                e.print();
-                e.remove(e3);
-                System.out.println("########## After removing ***************");
-                System.out.println(e.contains(e4)); //after remove
-                e.print();
-
-        }
 }

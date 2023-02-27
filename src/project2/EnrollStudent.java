@@ -100,11 +100,4 @@ public class EnrollStudent{
 
     }
 
-    public static void main(String[] args) {
-        Profile p1 = new Profile("lname", "name", new Date("12/10/2002"));
-        EnrollStudent e1 = new EnrollStudent(p1, 10);
-        Profile p2 = new Profile("lname", "name", new Date("12/10/2002"));
-        EnrollStudent e2 = new EnrollStudent(p2, 8);
-        System.out.println(e1.equals(e2));
-    }
 }

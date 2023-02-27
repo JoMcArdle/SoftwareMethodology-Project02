@@ -94,17 +94,4 @@ public class NonResident extends Student{
         return super.toString() + " (" + "non-resident" + ")";
     }
 
-    public static void main(String[] args) {
-
-        Profile profile = new Profile("Lopez", "Juan", new Date("10/12/1992"));
-
-        NonResident nonResident = new NonResident(profile, Major.BAIT, 0);
-
-        System.out.println(nonResident);
-
-        System.out.println(nonResident.tuitionDue(12));
-
-
-    }
-
 }

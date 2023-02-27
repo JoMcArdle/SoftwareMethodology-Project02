@@ -35,6 +35,7 @@ public class TuitionManager {
     private static final int MAX_SCHOLARSHIP_AMOUNT = 10000;
     private static final int MIN_SCHOLARSHIP_AMOUNT = 1;
     private static final int NUM_CREDITS_FOR_GRADUATION = 120;
+    private static final int SUB_BY_THREE = 3;
 
     /**
      * Empty constructor, used by the driver class RunProject1.
@@ -226,7 +227,7 @@ public class TuitionManager {
 
         System.out.println("** Tuition due **");
 
-        for (int i = 0; i < numEnrolledStudents-3; i++) {
+        for (int i = 0; i < numEnrolledStudents - SUB_BY_THREE; i++) {
 
             enrollStudent = enrollList.returnEnrollStudent(i);
 
@@ -249,7 +250,7 @@ public class TuitionManager {
      */
     private boolean semesterEndCommand() {
 
-        for(int i = 0; i < numEnrolledStudents-3; i++) {
+        for(int i = 0; i < numEnrolledStudents - SUB_BY_THREE; i++) {
 
             enrollStudent = enrollList.returnEnrollStudent(i);
             this.student = new Resident(enrollStudent.getProfile(), Major.CS, 0, 0);
@@ -261,7 +262,7 @@ public class TuitionManager {
 
         System.out.println("** list of students eligible for graduation **");
 
-        for(int i = 0; i < numEnrolledStudents-3; i++) {
+        for(int i = 0; i < numEnrolledStudents - SUB_BY_THREE; i++) {
 
             enrollStudent = enrollList.returnEnrollStudent(i);
             this.student = new Resident(enrollStudent.getProfile(), Major.CS, 0, 0);
@@ -838,49 +839,7 @@ public class TuitionManager {
     private void convertToTokens(String tokens) {
 
         this.arrOfTokens = tokens.split("\\s+|,");
-       {
 
-<<<<<<< Updated upstream
-            this.opCode = arrOfTokens[0];
-            if (this.opCode.equals("L")) {
-                this.major = arrOfTokens[1].toUpperCase();
-            } else if (this.opCode.equals("LS")) {
-                this.file = arrOfTokens[1];
-            } else if (this.opCode.equals("E")) {
-                enrollmentTokens();
-            } else if (this.opCode.equals("S")) {
-                scholarshipTokens();
-            } else {
-                if (arrOfTokens.length > 1) {
-                    this.fname = arrOfTokens[1];
-                }
-                if (arrOfTokens.length > 2) {
-                    this.lname = arrOfTokens[2];
-                }
-                if (arrOfTokens.length > 3) {
-                    this.dob = arrOfTokens[3];
-                } else {
-                    this.dob = null;
-                }
-                if (arrOfTokens.length > 4) {
-                    this.major = arrOfTokens[4];
-                }
-                if (arrOfTokens.length > 5) {
-                    this.credits = arrOfTokens[5];
-                } else {
-                    this.credits = null;
-                }
-                if (arrOfTokens.length > 6 && (opCode.equals("AT") || opCode.equals("T"))) {
-                    this.state = arrOfTokens[6];
-                } else {
-                    this.state = null;
-                }
-                if (arrOfTokens.length > 6 && (opCode.equals("AI") || opCode.equals("I"))) {
-
-                    this.studyAbroad = Boolean.parseBoolean(arrOfTokens[6]);
-                }
-            }
-=======
         this.opCode = arrOfTokens[0];
 
         convertSpecialTokenCases();
@@ -915,9 +874,10 @@ public class TuitionManager {
         if (arrOfTokens.length > 6 && (opCode.equals("AI") || opCode.equals("I"))) {
 
             this.studyAbroad = Boolean.parseBoolean(arrOfTokens[6]);
->>>>>>> Stashed changes
+
         }
     }
+
     //------------------------------------------------------------------------------------------------------------------
     //endregion
 
@@ -935,9 +895,6 @@ public class TuitionManager {
         while(sc.hasNextLine()) {
 
             String command = sc.nextLine();
-            if(command.length() ==0){
-                continue;
-            }
 
             if(command.length() == 0) {
                 continue;
